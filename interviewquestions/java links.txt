@@ -1,2 +1,7 @@
 https://java2blog.com/data-structure-and-algorithm-interview-questions-in-java/#Question_1_Implement_a_stack_using_array
 http://www.codespaghetti.com/java-algorithms-questions/
+https://www.martinkysel.com/codility-solutions/
+https://www.geeksforgeeks.org/fundamentals-of-algorithms/
+https://brilliant.org/courses/computer-science-algorithms/strings-2/
+http://codingbat.com/java
+http://www.codespaghetti.com/
