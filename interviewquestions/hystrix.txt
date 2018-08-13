@@ -1,0 +1,12 @@
+basically hystrix is an fault tolerance library.
+hystrix is useful in distributed applications like to check exteranl service running or not.
+in distributed applications if suppose u r booking ticket from some website and while payment it will connect some payment ms and payment
+details are strored in database and after that send notification via email(SMTP) IS another service.if any failure in any of the service then 
+failure will delegate notification->payment->applocation.so to stop delegating failure to all services hystrix will be used to break 
+the circuit. 
+
+instead of showing raw error msg using hystrix can show fall back error reponse.
+
+let say if one service is down then we will get internal server error 500.this is raw error message.
+if using hystrix we can throw fallback response so application should not break.
+ex: server gateway failed
