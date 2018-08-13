@@ -5,3 +5,11 @@ https://www.geeksforgeeks.org/fundamentals-of-algorithms/
 https://brilliant.org/courses/computer-science-algorithms/strings-2/
 http://codingbat.com/java
 http://www.codespaghetti.com/
+
+https://github.com/Java-aid/Hackerrank-Solutions
+https://github.com/xeoneux/30-Days-of-Code
+https://github.com/vrajasekharreddy/HackerRank
+ alexprut/HackerRank
+https://github.com/marinskiy/HackerrankPractice/tree/master/SQL
+https://github.com/Aabhas99/HackerRank-Solution-To-Algorithms/tree/master/Java
+https://github.com/vrajasekharreddy/oracle-cert-pro-se8-1z0-809
