@@ -13,3 +13,4 @@ https://github.com/vrajasekharreddy/HackerRank
 https://github.com/marinskiy/HackerrankPractice/tree/master/SQL
 https://github.com/Aabhas99/HackerRank-Solution-To-Algorithms/tree/master/Java
 https://github.com/vrajasekharreddy/oracle-cert-pro-se8-1z0-809
+https://java2blog.com/java-threadpoolexecutor-example/
