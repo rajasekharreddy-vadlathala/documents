@@ -1,0 +1,165 @@
+PUT localhost:9200/books?&pretty - create INDEX books
+curl -XPUT 'localhost:9200/books?&pretty'
+
+GET localhost:9200/books/_mapping?&pretty - 2 c mappings for index
+CURL -XGET 'localhost:9200/books/_mapping?&pretty'
+ 
+curl -XPOST 'localhost:9200/books/fiction/1?&pretty' -d @books.json -H 'Content-Type: application/json'
+localhost:9200/books/fiction/1?&pretty
+
+books.json:
+{
+"name":"Java",
+"author":"Rajasekhar",
+"cost":"200.50",
+"Available":"true",
+"publishers":"Graham Hills",
+"date":"2018-05-07"
+}
+>> after adding document to index run below command
+>> CURL -XGET 'localhost:9200/books/_mapping?&pretty' - 2 c mappings of an index
+{
+    "books": {
+        "mappings": {
+            "fiction": {
+                "properties": {
+                    "Available": {
+                        "type": "text", --> means u can perform full text search on this field
+                        "fields": {
+                            "keyword": { --> keyword mapping - we can perform keyword search - usually used for sorting,filtering and aggregations
+                                "type": "keyword", -->ex:get me count of books that are available,that is a one keyword aggregation.
+                                "ignore_above": 256 -->keyword fields will allow only 256 characters
+                            }
+                        }
+                    },
+                    "author": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "cost": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "date": {
+                        "type": "date"
+                    },
+                    "name": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "publishers": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+>> mappings can be set only when the index is created,they can not be edited after that..
+
+>>only updates that you can make to mappings is to add new fields.
+
+books2.json:
+
+{
+ "properties":{
+ "pages":{
+ "type":"integer"
+ }
+}
+}
+>> adding new field 'pages' to our mapping
+curl -XPUT 'localhost:9200/books/_mapping/fiction?pretty' -d @books2.json -H 'Content-Type : application/json'
+localhost:9200/books/_mapping/fiction?pretty
+output:
+acknowledged=true
+
+now see mapping again for an index whether pages field added or not:
+
+localhost:9200/books/_mapping?&pretty
+
+{
+  "books" : {
+    "mappings" : {
+      "fiction" : {
+        "properties" : {
+          "Available" : {
+            "type" : "text",
+            "fields" : {
+              "keyword" : {
+                "type" : "keyword",
+                "ignore_above" : 256
+              }
+            }
+          },
+          "author" : {
+            "type" : "text",
+            "fields" : {
+              "keyword" : {
+                "type" : "keyword",
+                "ignore_above" : 256
+              }
+            }
+          },
+          "cost" : {
+            "type" : "text",
+            "fields" : {
+              "keyword" : {
+                "type" : "keyword",
+                "ignore_above" : 256
+              }
+            }
+          },
+          "date" : {
+            "type" : "date"
+          },
+          "name" : {
+            "type" : "text",
+            "fields" : {
+              "keyword" : {
+                "type" : "keyword",
+                "ignore_above" : 256
+              }
+            }
+          },
+          "pages" : {
+            "type" : "integer"
+          },
+          "publishers" : {
+            "type" : "text",
+            "fields" : {
+              "keyword" : {
+                "type" : "keyword",
+                "ignore_above" : 256
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
