@@ -94,7 +94,7 @@ books2.json:
 curl -XPUT 'localhost:9200/books/_mapping/fiction?pretty' -d @books2.json -H 'Content-Type : application/json'
 localhost:9200/books/_mapping/fiction?pretty
 output:
-acknowledged=true
+acknowledged=true - means pages field sucessfully added to books schema.
 
 now see mapping again for an index whether pages field added or not:
 
