@@ -61,7 +61,7 @@ custom_books.json
 {
 	"settings":{
 		"number_of_shards":	1
-		"number_of_replicas": 0
+		"number_of_replicas": 0 - since i m running in my local a single node cluster .
 	}
 	"dynamic":"strict",
 	"mappings":{
@@ -89,3 +89,43 @@ custom_books.json
 		"_source":{
 			"enabled":false
 		}
+		
+>>concatenates contents of all fields into one big string using space as delimiter - disabled in V6 by default.
+and also enables searching within all fields in a document without knowing which field holds the information
+			"_all":{
+				"enabled": false
+			}
+			
+example:
+movies.json:
+
+{
+	"settings":{
+		"number_of_shards":	1
+		"number_of_replicas": 0 - since i m running in my local a single node cluster .
+	}
+	"dynamic":"strict",
+	"mappings":{
+	  "my_mapping":{
+		"_source":{
+			"enabled":false
+		}
+		"_all":{
+				"enabled": false
+		}
+		"properties":{
+			"title":{"type":"text"},
+			"director":{"type":"text"},
+			"actors":{"type":"object"},
+			"released":{
+			"type":"date"
+			"format":"YYYY-MM-DD"
+			}
+		}
+	  }
+	}
+}		
+>> now create a movies index with using explicit customized mapping json(custom_movies.json) 
+>> CURL -XPUT 'localhost:9200/movies/?pretty' -d @custom_movies.json -H 'Content-Type: application/json'
+>>now query the mappings of that specific index
+>> CURL -XGET 'localhost:9200/movies/_mapping?&pretty	
