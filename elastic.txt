@@ -15,7 +15,6 @@ This means that each index will consist of five primary shards, and each shard w
 PUT localhost:9200/books?&pretty 
 curl -XPUT 'localhost:9200/books?&pretty'
 
-
 GET localhost:9200/books/_mapping?&pretty - 2 c mappings for index
 CURL -XGET 'localhost:9200/books/_mapping?&pretty'
  
@@ -109,7 +108,7 @@ books2.json:
 curl -XPUT 'localhost:9200/books/_mapping/fiction?pretty' -d @books2.json -H 'Content-Type : application/json'
 localhost:9200/books/_mapping/fiction?pretty
 output:
-acknowledged=true - means pages field sucessfully added to books schema.
+acknowledged=true - means added new field successfully to books schema.
 
 now see mapping again for an index whether pages field added or not:
 
@@ -176,11 +175,12 @@ localhost:9200/books/_mapping?&pretty
     }
   }
 }
-
 delete index:
 curl -XDELETE 'localhost:9200/books?pretty'
 localhost:9200/books?pretty
 {
   "acknowledged" : true
 }
->> finally deleted books index.
+
+finally deleted books index.
+

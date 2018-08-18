@@ -4,11 +4,11 @@ so to show correct data type we have to enable numeric-detection for mappings of
 ex:
 CURL -XPUT 'localhost:9200/my_index?pretty' -H 'Content-Type: application/json' -d
 {
-"mappings"{
-"my_type":{
-	numeric-detection=true 
-}
-}
+    "mappings":{
+		"my_type":{
+			"numeric_detection": true
+		}
+	}
 }
 >>adding date field to mapping
 CURL -XPUT 'localhost:9200/my_index/my_type/1/?pretty' -H 'Content-Type: application/json' -d
@@ -19,18 +19,18 @@ CURL -XPUT 'localhost:9200/my_index/my_type/1/?pretty' -H 'Content-Type: applica
 CURL -XGET 'localhost:9200/my_index/my_type/_mapping?pretty'
 
 {
-	"my_index":{
-		"mappings":{
-			"my_type":{
-			  "numeric-detection" : true,
-			  "properties":{
-				"count":{
-					"type":"long"
-					}
-			  }
-			}
-		 }
-	}
+  "my_index" : {
+    "mappings" : {
+      "my_type" : {
+        "numeric_detection" : true,
+        "properties" : {
+          "count" : {
+            "type" : "long"
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -40,7 +40,7 @@ CURL -XPUT 'localhost:9200/my_index1?pretty' -H 'Content-Type: application/json'
 {
 "mappings"{
 "my_date_type":{
-	date-detection=true 
+	"date-detection":true 
 }
 }
 }
@@ -50,4 +50,31 @@ CURL -XPUT 'localhost:9200/my_index1/my_date_type/1/?pretty' -H 'Content-Type: a
  "create_date":"2018/08/08"
 }
 
-Explicit Mappings:
+set up Explicit Mappings for an index:
+
+update the "settings" of an index:
+
+"dynamic":"strict" - new fields not accepted,exception is thrown
+"dynamic":"true" - new fields are accepted and indexed(default)
+"dynamic":"false" - new fields are accepted but ignored and not indexed.
+
+{
+	"settings":{
+		"number_of_shards":	1
+		"number_of_replicas": 0
+	}
+	"dynamic":"strict",
+	"mappings":{
+	  "my_mapping":{
+		"properties":{
+			"name":{"type":"text"},
+			"author":{"type":"text"},
+			"cost":{"type":"float"},
+			"available":{"type":"boolean"},
+			"pages":{"type":"integer"},
+			"date":{"type":"date"}
+		}
+	  }
+	}
+}
+
