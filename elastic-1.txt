@@ -1,0 +1,53 @@
+Dynamic Field Mapping for JSON Data
+>> if we are not setting numeric-detection = true then elastic search will defined long types as strings.
+so to show correct data type we have to enable numeric-detection for mappings of an index.
+ex:
+CURL -XPUT 'localhost:9200/my_index?pretty' -H 'Content-Type: application/json' -d
+{
+"mappings"{
+"my_type":{
+	numeric-detection=true 
+}
+}
+}
+>>adding date field to mapping
+CURL -XPUT 'localhost:9200/my_index/my_type/1/?pretty' -H 'Content-Type: application/json' -d
+{
+ "count":"30"
+}
+>> check data type as below
+CURL -XGET 'localhost:9200/my_index/my_type/_mapping?pretty'
+
+{
+	"my_index":{
+		"mappings":{
+			"my_type":{
+			  "numeric-detection" : true,
+			  "properties":{
+				"count":{
+					"type":"long"
+					}
+			  }
+			}
+		 }
+	}
+}
+
+
+-------DATE---------
+>> if we are not giving elastic standard date format then elastic will consider date as string.(standard - yyyy/MM/dd)
+CURL -XPUT 'localhost:9200/my_index1?pretty' -H 'Content-Type: application/json' -d
+{
+"mappings"{
+"my_date_type":{
+	date-detection=true 
+}
+}
+}
+>>adding date field to mapping
+CURL -XPUT 'localhost:9200/my_index1/my_date_type/1/?pretty' -H 'Content-Type: application/json' -d
+{
+ "create_date":"2018/08/08"
+}
+
+Explicit Mappings:
