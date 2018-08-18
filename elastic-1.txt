@@ -57,7 +57,7 @@ update the "settings" of an index:
 "dynamic":"strict" - new fields not accepted,exception is thrown
 "dynamic":"true" - new fields are accepted and indexed(default)
 "dynamic":"false" - new fields are accepted but ignored and not indexed.
-
+custom_books.json
 {
 	"settings":{
 		"number_of_shards":	1
@@ -66,6 +66,9 @@ update the "settings" of an index:
 	"dynamic":"strict",
 	"mappings":{
 	  "my_mapping":{
+		"_source":{
+			"enabled":false
+		}
 		"properties":{
 			"name":{"type":"text"},
 			"author":{"type":"text"},
@@ -78,3 +81,11 @@ update the "settings" of an index:
 	}
 }
 
+>> now create a books index with using explicit customized mapping (custom_books.json) 
+>> CURL -XPUT 'localhost:9200/books/?pretty' -d @custom_books.json -H 'Content-Type: application/json'
+>>now query the mappings of that specific index
+>> CURL -XGET 'localhost:9200/books/_mapping?&pretty
+>>in elastic documents will be saved to disc space by default..u can restrict saving documents to disc space using below properties inside mappings.
+		"_source":{
+			"enabled":false
+		}
