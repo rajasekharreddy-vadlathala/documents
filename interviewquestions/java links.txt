@@ -5,6 +5,7 @@ https://www.geeksforgeeks.org/fundamentals-of-algorithms/
 https://brilliant.org/courses/computer-science-algorithms/strings-2/
 http://codingbat.com/java
 http://www.codespaghetti.com/
+https://dzone.com/articles/23-useful-elasticsearch-example-queries
 
 https://github.com/Java-aid/Hackerrank-Solutions
 https://github.com/xeoneux/30-Days-of-Code
