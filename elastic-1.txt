@@ -133,23 +133,14 @@ movies.json:
 >> elastic search bool query to get records from elastic index order by timestamp desc and match with ex_id
 GET index_name/_search
 {
-   "from" : 0,
-   "size" : 1,
-    "query": {
-        "bool": {
-            "must": {
-                "bool" : { "must": [
-                      { "match": 
-                        { 
-                          "ex_id":"617-00001"
-                        }
-                      }
-                      ]
-                }
-            }
-        }
-    },
-    "sort":[
-       {"timestamp": "desc"}
+  "from" : "0",
+  "size" : "1",
+  "query": { 
+    "bool": { 
+      "must": [ 
+        { "match":  { "tg_id": "yyy-00001" }}
       ]
+    }
+  },
+  "sort":[{"timestamp": "desc"}]
 }
