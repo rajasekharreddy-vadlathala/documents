@@ -129,3 +129,27 @@ movies.json:
 >> CURL -XPUT 'localhost:9200/movies/?pretty' -d @custom_movies.json -H 'Content-Type: application/json'
 >>now query the mappings of that specific index
 >> CURL -XGET 'localhost:9200/movies/_mapping?&pretty	
+
+>> elastic search bool query to get records from elastic index order by timestamp desc and match with ex_id
+GET index_name/_search
+{
+   "from" : 0,
+   "size" : 1,
+    "query": {
+        "bool": {
+            "must": {
+                "bool" : { "must": [
+                      { "match": 
+                        { 
+                          "ex_id":"617-00001"
+                        }
+                      }
+                      ]
+                }
+            }
+        }
+    },
+    "sort":[
+       {"timestamp": "desc"}
+      ]
+}
