@@ -1,0 +1,174 @@
+--- the effect of mappings on how a field is indexed and searched ---
+curl -XPOST "http://localhost:9200/products/discounts/1?pretty" -H "Content-Type:application/json" -d'
+
+{
+"name": "multi grain bread",
+"cost": "500",
+"discount": "10"
+}
+POSTMAN:
+localhost:9200/products/discounts/1?pretty
+{
+"name": "multi grain bread",
+"cost": "500",
+"discount": "10"
+}
+RESULT:
+{
+    "_index": "products",
+    "_type": "discounts",
+    "_id": "1",
+    "_version": 1,
+    "result": "created",
+    "_shards": {
+        "total": 2,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 0,
+    "_primary_term": 1
+}
+--We haven't specified any explicit mappings for this index..so every field will be detected as string field with the map text and keyword. 
+CURL -XGET localhost:9200/products/_mapping?&pretty
+
+{
+    "products": {
+        "mappings": {
+            "discounts": {
+                "properties": {
+                    "cost": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "discount": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "name": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+--write explicit mappings for an index:
+product-mapping.json:
+{
+ "mappings":{
+  "discounts":{
+	"properties":{
+		"name": {"type" : "text"},
+		"cost": {"type" : "integer"},
+		"discount": {"type" : "integer"}
+	}
+  }	
+ }
+}
+
+CURL -XPUT "http://localhost:9200/products_copy?pretty" -H "Content-Type:application/json" -d @product-mapping.json
+
+result:
+{
+  "acknowledged" : true,
+  "shards_acknowledged" : true,
+  "index" : "products_copy"
+}
+
+after adding mapping add document to the index:
+
+curl -XPOST "http://localhost:9200/products/discounts/1?pretty" -H "Content-Type:application/json" -d'
+{
+	"name": "multi grain bread",
+	"cost": "500",
+	"discount": "10"
+}
+
+now if we try wildcard query search on discount field (integer field)it will not work as earlier since we have created explicit mappings for fields.
+wildcard query:
+CURL -XGET "http://localhost:9200/products_copy/discounts/_search?pretty" -H "Content-Type:application/json" -d'
+{
+	"query":{
+	"wildcard": { "discount": "2*"} -->get discounts documents starts with 2
+	}
+}'
+match query: exact matches work with integers,as will comparisions,sorting etc.
+{
+	"query":{
+		"match": { "discount" : "20"}
+	}
+
+}
+
+ 
+
+>>if we dont speicfy date standard format ('YYYY-MM-DD') for a field then elastic index will find date field as string field 
+and mapped for full text and keyword search.
+
+ex: "registration_date" : "20-09-2018"
+
+>>now if u see index mappings it will be as below :
+CURL -XGET localhost:9200/blogs/_mapping?&pretty
+"registration_date": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    }
+
+>>so if we create explicit mapping for date field then elastic will consider as standard date field.now you can not perform partial date search
+
+mapping-blogs.json:
+
+{
+	"mappings":{
+		"posts":{
+			"properties":{
+				"registration_date": 
+				{ 
+				"type":"date",
+				"format":"DD-MM-YYYY"
+				}
+			}
+		}
+	}
+}
+
+>>CURL -XGET "http://localhost:9200/posts/blogs/posts/_search?pretty" -H "Content-Type:application/json" -d'
+{
+	"query":{
+		"match": { "registration_date" : "20-09"}
+	}
+
+}'
+
+now partial date search will not work since there is no date matched with the given mapping date format..you will get parse failure at index error.
+
+>>CURL -XGET "http://localhost:9200/posts/blogs/posts/_search?pretty" -H "Content-Type:application/json" -d'
+{
+	"query":{
+		"match": { "registration_date" : "20-09-2018"}
+	}
+
+}'
+
+now will get exact matched results.
