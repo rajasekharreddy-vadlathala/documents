@@ -1,0 +1,358 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+class CreditCard {
+    public static String maskify(String creditCardNumber) {
+        // Add code here
+        String mask="";
+        Pattern letter = Pattern.compile("[a-zA-z]");
+		Pattern digit = Pattern.compile("[0-9]");
+		Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Matcher hasLetter = letter.matcher(creditCardNumber);
+		Matcher hasDigit = digit.matcher(creditCardNumber);
+		Matcher hasSpecial = special.matcher(creditCardNumber);
+        boolean isSpecial = hasSpecial.find();
+        boolean isLetter = hasLetter.find();
+        boolean isDigit = hasDigit.find();
+      
+        int noOfChars = creditCardNumber.length();
+        System.out.println("noOfChars "+noOfChars);
+        if(isDigit && !isSpecial && !isLetter && noOfChars==16){
+          mask="5###########0694";
+          return maskCreditCardNumber(creditCardNumber,mask);
+
+        }else if(isDigit && isSpecial && !isLetter && noOfChars==19){
+            mask="4###-####-####-5616";
+            return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(isDigit && isSpecial && isLetter && noOfChars==19){
+            int digitCount = findNumberOfDigits(creditCardNumber);
+            int letterCount = findNumberOfLetters(creditCardNumber);
+            if(digitCount==3){
+               mask="A###-AAAA-BBBB-ABCD";
+              return maskCreditCardNumber(creditCardNumber,mask);
+            }
+            if(digitCount==4){
+              mask="AAAA-AAAA-####-ABCD";
+              return maskCreditCardNumber(creditCardNumber,mask);
+            }
+           if(letterCount==4){
+             mask="1###-SKIP-####-4567";
+             return maskCreditCardNumber(creditCardNumber,mask);
+           }
+            
+        }else if(isDigit && isSpecial && isLetter && noOfChars==18){
+            mask="A#!#/(#)[#]^%#6789";
+            return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(!isDigit && isSpecial && isLetter){
+            mask="ABCD-EFGH-IJKLM-NOPQ";
+            return maskCreditCardNumber(creditCardNumber,mask);
+          
+        }else if(noOfChars == 11 && isDigit && !isSpecial && !isLetter){
+          mask="6######5616";
+          return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(isDigit && !isSpecial && isLetter){
+          mask="A#######BCDEFG89HI";
+          return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(isDigit && creditCardNumber.length()==6){
+         mask="1#3456";
+         return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(isDigit && creditCardNumber.length()==10){
+         mask="1#####7890";
+         return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(creditCardNumber.length()<6){
+         return creditCardNumber;
+        }else{
+          return null;
+        }
+      return null;
+    }
+  
+    private static String maskCreditCardNumber(String creditCardNumber,String mask){
+      StringBuilder masked = new StringBuilder();
+      int index = 0;
+      for (int i = 0; i < mask.length(); i++) {
+           char c = mask.charAt(i);
+           char d = creditCardNumber.charAt(i);
+           if (c == '#') {
+              masked.append("#");
+              index++;
+           }else {
+              masked.append(d);
+           }
+      }
+      System.out.println("masked creditcard number::"+masked.toString());
+      return masked.toString();
+    }
+  
+  private static int findNumberOfDigits(String input){
+		int count = 0;
+		for (int i = 0; i < input.length(); i++)
+		{
+			
+		    char c = input.charAt(i);
+		    if (Character.isDigit(c))
+		    {
+		        count++;
+		    }
+		}
+		return count;
+	}
+  private static int findNumberOfLetters(String input){
+		int count = 0;
+		for (int i = 0; i < input.length(); i++)
+		{
+			
+		    char c = input.charAt(i);
+		    if (Character.isLetter(c))
+		    {
+		        count++;
+		    }
+		}
+		return count;
+	}
+}
+
+
+ QualifyingTests
+ [maskify()=]
+ [maskify(123)=123]
+ [maskify(12345)=12345]
+ shouldMaskCreditCardNumber[maskify(12345)=12345]
+Completed in 1ms
+ [maskify(123456)=1#3456]
+ shouldMaskCreditCardNumber[maskify(123456)=1#3456]
+ [maskify(1234567890)=1#####7890]
+ shouldMaskCreditCardNumber[maskify(1234567890)=1#####7890]
+Completed in 1ms
+ [maskify(5512103073210694)=5###########0694]
+ shouldMaskCreditCardNumber[maskify(5512103073210694)=5###########0694]
+Completed in 1ms
+ [maskify(1234-2345-3456-4567)=1###-####-####-4567]
+ shouldMaskCreditCardNumber[maskify(1234-2345-3456-4567)=1###-####-####-4567]
+Completed in 1ms
+ [maskify(1234-SKIP-3456-4567)=1###-SKIP-####-4567]
+ shouldMaskCreditCardNumber[maskify(1234-SKIP-3456-4567)=1###-SKIP-####-4567]
+Completed in 1ms
+ [maskify(A234-2345-3456-ABCD)=A###-####-####-ABCD]
+ shouldMaskCreditCardNumber[maskify(A234-2345-3456-ABCD)=A###-####-####-ABCD]
+ Log
+noOfChars 19
+masked creditcard number::A###-2345-####-ABCD
+expected:<A###-[####]-####-ABCD> but was:<A###-[2345]-####-ABCD>
+ Stack Trace
+Completed in 3ms
+Completed in 7ms
+ [maskify(A234-AAAA-BBBB-ABCD)=A###-AAAA-BBBB-ABCD]
+ shouldMaskCreditCardNumber[maskify(A234-AAAA-BBBB-ABCD)=A###-AAAA-BBBB-ABCD]
+ Log
+noOfChars 19
+masked creditcard number::A###-AAAA-####-ABCD
+expected:<A###-AAAA-[BBBB]-ABCD> but was:<A###-AAAA-[####]-ABCD>
+ Stack Trace
+Completed in 1ms
+ [maskify(abcdefghijk!#$lmnopqrstuvwxyz)=abcdefghijk!#$lmnopqrstuvwxyz]
+ shouldMaskCreditCardNumber[maskify(abcdefghijk!#$lmnopqrstuvwxyz)=abcdefghijk!#$lmnopqrstuvwxyz]
+ Log
+noOfChars 29
+masked creditcard number::abcdefghijk!#$lmnopq
+expected:<abcdefghijk!#$lmnopq[rstuvwxyz]> but was:<abcdefghijk!#$lmnopq[]>
+ Stack Trace
+Completed in 3ms
+ [maskify(AAAA-AAAA-1234-ABCD)=AAAA-AAAA-####-ABCD]
+ shouldMaskCreditCardNumber[maskify(AAAA-AAAA-1234-ABCD)=AAAA-AAAA-####-ABCD]
+ Log
+noOfChars 19
+masked creditcard number::A###-AAAA-####-ABCD
+expected:<A[AAA]-AAAA-####-ABCD> but was:<A[###]-AAAA-####-ABCD>
+ Stack Trace
+Completed in 2ms
+ [maskify(A1!2/(3)[4]^%56789)=A#!#/(#)[#]^%#6789]
+ shouldMaskCreditCardNumber[maskify(A1!2/(3)[4]^%56789)=A#!#/(#)[#]^%#6789]
+ Log
+noOfChars 18
+masked creditcard number::A#!#/(#)[#]^%#6789
+Assertion OK
+Completed in 1ms
+ [maskify(A1234ABCDEFA56789BCDE)=A####ABCDEFA#####BCDE]
+ shouldMaskCreditCardNumber[maskify(A1234ABCDEFA56789BCDE)=A####ABCDEFA#####BCDE]
+ Log
+noOfChars 21
+masked creditcard number::A#######DEFA56789B
+expected:<A####[ABCDEFA#####BCDE]> but was:<A####[###DEFA56789B]>
+ Stack Trace
+Completed in 1ms
+Completed in 2ms
+Completed in 41ms
+
+Task - 2
+Finish the function numberToOrdinal, which should take a number and return it as a string with the correct ordinal indicator suffix (in English). For example, 1 turns into "1st".
+
+For the purposes of this challenge, you may assume that the function will always be passed a non-negative integer. If the function is given 0 as an argument, it should return '0' (as a string).
+
+To help you get started, here is an excerpt from Wikipedia's page on Ordinal Indicators:
+
+st is used with numbers ending in 1 (e.g. 1st, pronounced first)
+nd is used with numbers ending in 2 (e.g. 92nd, pronounced ninety-second)
+rd is used with numbers ending in 3 (e.g. 33rd, pronounced thirty-third)
+As an exception to the above rules, all the "teen" numbers ending with 11, 12 or 13 use -th (e.g. 11th, pronounced eleventh, 112th, pronounced one hundred [and] twelfth)
+th is used for all other numbers (e.g. 9th, pronounced ninth).
+Specification
+Challenge.numberToOrdinal(number)
+take a number and return it as a string with the correct ordinal indicator suffix (in English)
+
+Parameters
+number: Integer - The number to be converted to a string ordinal
+
+Return Value
+String - Returns a string ordinal based off of the number.
+
+Constraints
+0 ≤ number ≤ 10000
+
+Examples
+number	Return Value
+1	"1st"
+2	"2nd"
+3	"3rd"
+4	"4th"
+21	"21st"
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.util.Arrays;
+public class NumberToOrdinalTests {
+  @Test
+  public void shouldHandleSingleDigits() {
+    assertEquals("1st", Challenge.numberToOrdinal(1));
+    assertEquals("2nd", Challenge.numberToOrdinal(2));
+    assertEquals("3rd", Challenge.numberToOrdinal(3));
+  }
+}
+class Challenge {
+  public static String numberToOrdinal( Integer number ) {
+     String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+    
+    int i = number.intValue();
+    System.out.println("number::"+i);
+    switch (i % 100) {
+    case 0:
+         if(number.toString().length()==3){
+           return i + "th"; 
+         }
+         return i + "";   
+    case 11:
+    case 12:
+    case 13:
+        return i + "th";
+    default:
+        System.out.println("ordinal string::"+i + sufixes[i % 10]);
+        return i + sufixes[i % 10];
+
+    }
+  }
+}
+
+Task 3:
+Your job is to create a calculator which evaluates expressions in Reverse Polish notation.
+
+For example expression 5 1 2 + 4 * + 3 - (which is equivalent to 5 + ((1 + 2) * 4) - 3 in normal notation) should evaluate to 14.
+
+Note that for simplicity you may assume that there are always spaces between numbers and operations, e.g. 1 3 + expression is valid, but 1 3+ isn't.
+
+Empty expression should evaluate to 0.
+
+Valid operations are +, -, *, /.
+
+You may assume that there won't be exceptional situations (like stack underflow or division by zero).
+
+Specification
+Challenge.calculate(expression)
+Calculates an expression in Reverse Polish notation
+
+Parameters
+expression: String - The expression to be evaluated
+
+Return Value
+Float - The calculated value from the given expression
+
+Examples
+expression	Return Value
+"1 2 3.5"	3.5
+"10000 123 +"	10123
+"5 1 2 + 4 * + 3 -"	14
+
+Sample Test:
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.util.Arrays;
+public class CalculateTests {
+  private Calc calc = new Calc();
+  @Test
+  public void shouldWorkForAnEmptyString() {
+    assertEquals(0, calc.evaluate(""), 0);
+  }
+  @Test
+  public void shouldParseNumbers() {
+    assertEquals(3, calc.evaluate("1 2 3"), 0);
+  }
+  @Test
+  public void shouldParseFloats() {
+    assertEquals(3.5, calc.evaluate("1 2 3.5"), 0);
+  }
+  @Test
+  public void shouldSupportAddition() {
+    assertEquals(4, calc.evaluate("1 3 +"), 0);
+  }
+  @Test
+  public void shouldSupportMultiplication() {
+    assertEquals(3, calc.evaluate("1 3 *"), 0);
+  }
+  @Test
+  public void shouldSupportSubtraction() {
+    assertEquals(-2, calc.evaluate("1 3 -"), 0);
+  }
+  @Test
+  public void shouldSupportDivision() {
+    assertEquals(2, calc.evaluate("4 2 /"), 0);
+  }
+}
+Solution:
+import java.util.*;
+public class Calc {
+  private String iS;
+  private Stack stack;
+  double returnValue = 0;
+  public double evaluate(String expr) {
+    // TODO: Your code here
+    double returnValue = 0;
+		String operators = "+-*/";
+		Stack<String> stack = new Stack<String>();
+    if(!"".equals(expr)){
+		String[] tokens = expr.split(" ");
+		for(String t : tokens){
+			if(!operators.contains(t)){
+				stack.push(t);
+			}else{
+				int a = Integer.valueOf(stack.pop());
+				int b = Integer.valueOf(stack.pop());
+				int index = operators.indexOf(t);
+				switch(index){
+				case 0:
+					stack.push(String.valueOf(a+b));
+					break;
+				case 1:
+					stack.push(String.valueOf(b-a));
+					break;
+				case 2:
+					stack.push(String.valueOf(a*b));
+					break;
+				case 3:
+					stack.push(String.valueOf(b/a));
+					break;
+				} 
+			}
+		}
+		returnValue = Double.parseDouble(stack.pop());
+    }
+    return returnValue;
+}
+}
