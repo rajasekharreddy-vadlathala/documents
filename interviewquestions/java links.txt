@@ -2,6 +2,7 @@ http://www.cowtowncoder.com/blog/archives/2012/04/entry_470.html - after burner 
 https://www.baeldung.com/java-asm
 https://dzone.com/articles/scatter-gather-mule-esb
 https://www.ricston.com/blog/making-mules-scatter-gather-lenient/
+https://www.elastic.co/blog/found-java-clients-for-elasticsearch - elastic search
 ---------------------------------------
 https://java2blog.com/data-structure-and-algorithm-interview-questions-in-java/#Question_1_Implement_a_stack_using_array
 http://www.codespaghetti.com/java-algorithms-questions/
