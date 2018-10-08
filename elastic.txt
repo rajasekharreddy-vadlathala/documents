@@ -17,6 +17,9 @@ pom dependencies for elastic search:
 			<artifactId>shield</artifactId>
 			<version>2.2.0</version>
 		</dependency>
+//load json from properties folder and convert to String
+ String mappingJson = new String(ByteStreams.toByteArray(this.getClass().getClassLoader().getResourceAsStream("product_mapping.json")));
+		
   
 >>cluster – An Elasticsearch cluster consists of one or more nodes and is identifiable by its cluster name.
 
