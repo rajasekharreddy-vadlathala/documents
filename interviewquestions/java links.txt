@@ -3,6 +3,8 @@ https://www.baeldung.com/java-asm
 https://dzone.com/articles/scatter-gather-mule-esb
 https://www.ricston.com/blog/making-mules-scatter-gather-lenient/
 https://www.elastic.co/blog/found-java-clients-for-elasticsearch - elastic search
+http://malsolo.com/blog4java/?p=260 - springbatch
+https://www.baeldung.com/spring-batch-tasklet-chunk - spring batch
 ---------------------------------------
 https://java2blog.com/data-structure-and-algorithm-interview-questions-in-java/#Question_1_Implement_a_stack_using_array
 http://www.codespaghetti.com/java-algorithms-questions/
