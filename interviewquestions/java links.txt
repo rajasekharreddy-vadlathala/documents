@@ -5,6 +5,12 @@ https://www.ricston.com/blog/making-mules-scatter-gather-lenient/
 https://www.elastic.co/blog/found-java-clients-for-elasticsearch - elastic search
 http://malsolo.com/blog4java/?p=260 - springbatch
 https://www.baeldung.com/spring-batch-tasklet-chunk - spring batch
+---Mongodb to remove sections from collection ---
+Query query = new Query();
+query.addCriteria(Criteria.where("id").is("44444"));
+Update update = new Update();
+update.unset("products");
+mongoTemplate.updateMulti(query, update, Product.class);
 ---------------------------------------
 https://java2blog.com/data-structure-and-algorithm-interview-questions-in-java/#Question_1_Implement_a_stack_using_array
 http://www.codespaghetti.com/java-algorithms-questions/
