@@ -5,6 +5,7 @@ https://www.ricston.com/blog/making-mules-scatter-gather-lenient/
 https://www.elastic.co/blog/found-java-clients-for-elasticsearch - elastic search
 http://malsolo.com/blog4java/?p=260 - springbatch
 https://www.baeldung.com/spring-batch-tasklet-chunk - spring batch
+https://www.elastic.co/guide/en/x-pack/current/securing-aliases.html
 ---Mongodb to remove sections from collection ---
 Query query = new Query();
 query.addCriteria(Criteria.where("id").is("44444"));
