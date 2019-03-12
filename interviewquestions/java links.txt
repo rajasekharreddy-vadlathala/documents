@@ -110,11 +110,7 @@ what are the annotations being used inside springbootapplication?
 18.5th Highest salary
 19.serialization -constructor will b called - deserialization - constructor will not b called
 	implements externalizable - will not b called - desria - will b called.
-
-
-
-
-
+20.Hibernate n+1 select problem
  
 
 
