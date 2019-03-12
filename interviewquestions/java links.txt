@@ -30,3 +30,93 @@ https://github.com/marinskiy/HackerrankPractice/tree/master/SQL
 https://github.com/Aabhas99/HackerRank-Solution-To-Algorithms/tree/master/Java
 https://github.com/vrajasekharreddy/oracle-cert-pro-se8-1z0-809
 https://java2blog.com/java-threadpoolexecutor-example/
+
+-------------------------
+1.why string is immutable?
+2.real time scanrio for string ? string s="raja" (string pool) string s1 = new String("raja"); -- both objects are same or different?
+3.in whcih scenario which collection can be used?
+4.comparable vs comparator? which one is better? can we acheive custom sorting using comparable?
+like
+Employee e1 = new Employee();
+e1.setName("sfds");
+e1.setAge(3);
+
+Employee e2 = new Employee();
+e2.setName("ss");
+e1.setAge(5);
+
+Employee e3 = new Employee();
+e3.setName("tttt");
+e3.setAge(6);
+
+Employee e4 = new Employee();
+e1.setName("sfds");
+e1.setAge(1);
+
+want to sort based on age in desc order..can we achieve using both ways?
+
+5.HashMap h= new HashMap();
+
+Employee e1 = new Employee();
+e1.setid("x");
+e1.setAge(3);
+
+Employee e2 = new Employee();
+e2.setid("x");
+e1.setAge(5);
+
+Employee e3 = new Employee();
+e3.setid("x");
+e3.setAge(6);
+
+Employee e4 = new Employee();
+e1.setid("x");
+e1.setAge(1);
+
+h.put(e1,e1);
+h.put(e2,e2);
+h.put(e3,e3);
+h.put(e4,e4);
+
+and if we add for set? what is the output? e1,e2,e3 objects ..with same id and name.? will it remove duplicate?
+
+what is the output?
+
+
+6.hashmap vs hashset?
+7.treeset vs sortedset?
+8.LinkedList vs ArrayList?
+9.HashMap internal architecture?
+
+10.how to make collection as sysnchronized?
+where and for which we can use synchronized keyword(methods,blocks) what is the use ? which one is better?
+
+11.how to make a class immutable? including variables and methods?
+if suppose we have setters and getters for that class how we can restrict to use them?
+
+12.what is application context?
+13.how to get application context?
+
+if we write logic to get appcontext 2 times and getting some singleton bean 2 times using 2 diff application context..bith beans will print same 
+hashcode?
+
+14.controller vs rest controller
+15.how to start spring boot application without using springbootapplication annotation?
+what are the annotations being used inside springbootapplication?
+
+16.in what layer which annotation will b used?
+
+17.component annotation vs repository annotation?
+18.5th Highest salary
+19.serialization -constructor will b called - deserialization - constructor will not b called
+	implements externalizable - will not b called - desria - will b called.
+
+
+
+
+
+ 
+
+
+
+
