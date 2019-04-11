@@ -1,0 +1,453 @@
+start zookeeper :
+C:\Rajasekhar\Softwares\kafka_2.12-2.1.1>zookeeper-server-start.bat config\zookeeper.properties
+
+start kafka-server:
+
+C:\Rajasekhar\Softwares\kafka_2.12-2.1.1>kafka-server-start.bat config\server.properties
+
+Kafka Topics CLI:
+
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create 										>> ERROR Missing required argument "[partitions]"
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create --partitions 3 	>>ERROR Missing required argument "[replication-factor]"
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create --partitions 3 --replication-factor 2 >>ERROR while executing topic command : Replication factor: 2 larger than available brokers: 1.
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create --partitions 3 --replication-factor 1
+]kafka-topics --zookeeper 127.0.0.1:2181 --list
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic first-topic --describe
+
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic "second_topic" --create --partitions 6 --replication-factor 1
+
+Kafka-Console-Producer CLI:
+
+C:\Users\Devaansh>kafka-console-producer  >kafka console producer cli used to publish messages to topic.
+
+Read data from standard input and publish it to Kafka.
+Option                                   Description
+------                                   -----------
+--batch-size <Integer: size>             Number of messages to send in a single
+                                           batch if they are not being sent
+                                           synchronously. (default: 200)
+--broker-list <String: broker-list>      REQUIRED: The broker list string in
+                                           the form HOST1:PORT1,HOST2:PORT2.
+--compression-codec [String:             The compression codec: either 'none',
+  compression-codec]                       'gzip', 'snappy', 'lz4', or 'zstd'.
+                                           If specified without value, then it
+                                           defaults to 'gzip'
+--line-reader <String: reader_class>     The class name of the class to use for
+                                           reading lines from standard in. By
+                                           default each line is read as a
+                                           separate message. (default: kafka.
+                                           tools.
+                                           ConsoleProducer$LineMessageReader)
+--max-block-ms <Long: max block on       The max time that the producer will
+  send>                                    block for during a send request
+                                           (default: 60000)
+--max-memory-bytes <Long: total memory   The total memory used by the producer
+  in bytes>                                to buffer records waiting to be sent
+                                           to the server. (default: 33554432)
+--max-partition-memory-bytes <Long:      The buffer size allocated for a
+  memory in bytes per partition>           partition. When records are received
+                                           which are smaller than this size the
+                                           producer will attempt to
+                                           optimistically group them together
+                                           until this size is reached.
+                                           (default: 16384)
+--message-send-max-retries <Integer>     Brokers can fail receiving the message
+                                           for multiple reasons, and being
+                                           unavailable transiently is just one
+                                           of them. This property specifies the
+                                           number of retires before the
+                                           producer give up and drop this
+                                           message. (default: 3)
+--metadata-expiry-ms <Long: metadata     The period of time in milliseconds
+  expiration interval>                     after which we force a refresh of
+                                           metadata even if we haven't seen any
+                                           leadership changes. (default: 300000)
+--producer-property <String:             A mechanism to pass user-defined
+  producer_prop>                           properties in the form key=value to
+                                           the producer.
+--producer.config <String: config file>  Producer config properties file. Note
+                                           that [producer-property] takes
+                                           precedence over this config.
+--property <String: prop>                A mechanism to pass user-defined
+                                           properties in the form key=value to
+                                           the message reader. This allows
+                                           custom configuration for a user-
+                                           defined message reader.
+--request-required-acks <String:         The required acks of the producer
+  request required acks>                   requests (default: 1)
+--request-timeout-ms <Integer: request   The ack timeout of the producer
+  timeout ms>                              requests. Value must be non-negative
+                                           and non-zero (default: 1500)
+--retry-backoff-ms <Integer>             Before each retry, the producer
+                                           refreshes the metadata of relevant
+                                           topics. Since leader election takes
+                                           a bit of time, this property
+                                           specifies the amount of time that
+                                           the producer waits before refreshing
+                                           the metadata. (default: 100)
+--socket-buffer-size <Integer: size>     The size of the tcp RECV size.
+                                           (default: 102400)
+--sync                                   If set message send requests to the
+                                           brokers are synchronously, one at a
+                                           time as they arrive.
+--timeout <Integer: timeout_ms>          If set and the producer is running in
+                                           asynchronous mode, this gives the
+                                           maximum amount of time a message
+                                           will queue awaiting sufficient batch
+                                           size. The value is given in ms.
+                                           (default: 1000)
+										   
+--topic <String: topic>                  REQUIRED: The topic id to produce
+                                           messages to.
+										   
+C:\Users\Devaansh>kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic
+>Hello Raja
+>How are u!
+>Terminate batch job (Y/N)? y
+
+C:\Users\Devaansh>kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic --producer-property acks=all
+>Hi Message ACKNOWLEDGED
+>THANKS KAFKA
+>Terminate batch job (Y/N)? Y
+
+C:\Users\Devaansh>kafka-console-producer --broker-list 127.0.0.1:9092 --topic new_topic
+>Hey this topic new_topic does not exist
+[2019-04-09 21:43:30,585] WARN [Producer clientId=console-producer] Error while fetching metadata with correlation id 1 : {new_topic=LEADER_NOT_AVAILABLE} (org.apache.kafka.clients.NetworkClient)
+>Hey is it created now?
+>Terminate batch job (Y/N)? y
+
+
+C:\Users\Devaansh>kafka-topics --zookeeper 127.0.0.1:2181 --list
+first_topic
+new_topic
+second_topic
+
+C:\Users\Devaansh>kafka-topics --zookeeper 127.0.0.1:2181 --topic new_topic --describe
+Topic:new_topic PartitionCount:1        ReplicationFactor:1     Configs:
+        Topic: new_topic        Partition: 0    Leader: 0       Replicas: 0     Isr: 0
+
+C:\Rajasekhar\Softwares\kafka_2.12-2.1.1>kafka-console-producer --broker-list 127.0.0.1:9092 --topic new_topic2
+>hi this new_topic2 does not exist
+[2019-04-09 22:07:50,122] WARN [Producer clientId=console-producer] Error while fetching metadata with correlation id 1 : {new_topic2=LEADER_NOT_AVAILABLE} (org.apache.kafka.clients.NetworkClient)
+>kafka will create new_topic2 with default partitions 3 which z configured in server.properties [sending message to topic]
+>lets check by describe kafka topic
+>Terminate batch job (Y/N)? y
+
+C:\Rajasekhar\Softwares\kafka_2.12-2.1.1>kafka-topics --zookeeper 127.0.0.1:2181 --topic new_topic2 --describe
+Topic:new_topic2        PartitionCount:3        ReplicationFactor:1     Configs:
+        Topic: new_topic2       Partition: 0    Leader: 0       Replicas: 0     Isr: 0
+        Topic: new_topic2       Partition: 1    Leader: 0       Replicas: 0     Isr: 0
+        Topic: new_topic2       Partition: 2    Leader: 0       Replicas: 0     Isr: 0
+
+
+Kafka Consumer CLI - Used to consume messages from topics:-
+
+C:\Rajasekhar\Softwares\kafka_2.12-2.1.1>kafka-console-consumer
+
+The console consumer is a tool that reads data from Kafka and outputs it to standard output.
+Option                                   Description
+------                                   -----------
+--bootstrap-server <String: server to    REQUIRED: The server(s) to connect to.
+  connect to>
+--consumer-property <String:             A mechanism to pass user-defined
+  consumer_prop>                           properties in the form key=value to
+                                           the consumer.
+--consumer.config <String: config file>  Consumer config properties file. Note
+                                           that [consumer-property] takes
+                                           precedence over this config.
+--enable-systest-events                  Log lifecycle events of the consumer
+                                           in addition to logging consumed
+                                           messages. (This is specific for
+                                           system tests.)
+--formatter <String: class>              The name of a class to use for
+                                           formatting kafka messages for
+                                           display. (default: kafka.tools.
+                                           DefaultMessageFormatter)
+--from-beginning                         If the consumer does not already have
+                                           an established offset to consume
+                                           from, start with the earliest
+                                           message present in the log rather
+                                           than the latest message.
+--group <String: consumer group id>      The consumer group id of the consumer.
+--isolation-level <String>               Set to read_committed in order to
+                                           filter out transactional messages
+                                           which are not committed. Set to
+                                           read_uncommittedto read all
+                                           messages. (default: read_uncommitted)
+--key-deserializer <String:
+  deserializer for key>
+--max-messages <Integer: num_messages>   The maximum number of messages to
+                                           consume before exiting. If not set,
+                                           consumption is continual.
+--offset <String: consume offset>        The offset id to consume from (a non-
+                                           negative number), or 'earliest'
+                                           which means from beginning, or
+                                           'latest' which means from end
+                                           (default: latest)
+--partition <Integer: partition>         The partition to consume from.
+                                           Consumption starts from the end of
+                                           the partition unless '--offset' is
+                                           specified.
+--property <String: prop>                The properties to initialize the
+                                           message formatter. Default
+                                           properties include:
+        print.
+                                           timestamp=true|false
+        print.
+                                           key=true|false
+        print.
+                                           value=true|false
+        key.separator=<key.
+                                           separator>
+        line.separator=<line.
+                                           separator>
+        key.deserializer=<key.
+                                           deserializer>
+        value.
+                                           deserializer=<value.deserializer>
+                                           Users can also pass in customized
+                                           properties for their formatter; more
+                                           specifically, users can pass in
+                                           properties keyed with 'key.
+                                           deserializer.' and 'value.
+                                           deserializer.' prefixes to configure
+                                           their deserializers.
+--skip-message-on-error                  If there is an error when processing a
+                                           message, skip it instead of halt.
+--timeout-ms <Integer: timeout_ms>       If specified, exit if no message is
+                                           available for consumption for the
+                                           specified interval.
+--topic <String: topic>                  The topic id to consume on.
+--value-deserializer <String:
+  deserializer for values>
+--whitelist <String: whitelist>          Whitelist of topics to include for
+                                           consumption.
+produce:
+
+C:\Rajasekhar\Softwares\kafka_2.12-2.1.1>kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic
+>Hi Publish first message to firsttopic
+>hi raja
+
+consume:
+C:\Users\Devaansh>kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic
+Hi Publish first message to firsttopic
+hi raja		
+
+
+C:\Users\Devaansh>kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning
+Hi Raja
+Hi Message ACKNOWLEDGED
+How are u!
+hi raja
+Hello Raja
+^C
+THANKS KAFKA
+Hi Publish first message to firsttopic
+
+Kafka Consumer Groups: in kafka consumers related to same consumer group id and if any messages 
+received to that group consumer groups rebalanced and share the load by all consumers.
+if suppose 3 consumers under consumer group - my-first-app
+
+if producer publishing messages to topic first_topic which is  having 3 partitions.
+
+so when ever producer push messages to that topic let say producer published 5 messages one by one so 
+each cosumer receive messages 
+
+message1
+message2
+message3
+message4
+message5
+
+consumer1>message1
+message2
+
+consumer2>message3
+message4
+
+consumer3>message 5
+
+this is one of the capability and power of consumer groups in kafka. so here conclusion is topic with 3 partitions and 3 cosnumers are under same
+consumer group.so each consumer will get message from diff partition.
+
+C:\Users\Devaansh>kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-first-app
+wrwerwerwer
+werwer434234234
+
+if we perform below action with different consumer group and get messages from --from-beginning 
+it will consume all messages which are avail in first_topic and again if we run same it will not get any messages since
+in kafka once message is committed message no longer will be available.
+ 
+C:\Users\Devaansh>kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-second-app --from-beginning
+Hi Raja
+Hi Message ACKNOWLEDGED
+hellooooooooooooooo
+message3
+message6
+message3
+message6
+message9
+4
+wrwerwerwer
+werwer434234234
+How are u!
+
+C:\Users\Devaansh>kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-second-app --from-beginning
+
+Kafka Consumer Groups CLI:
+
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --list
+my-first-app
+my-second-app
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group my-second-app
+Consumer group 'my-second-app' has no active members.
+
+TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+first_topic     0          13              13              0               -               -               -
+first_topic     1          12              12              0               -               -               -
+first_topic     2          15              15              0               -               -               -
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group my-first-app
+Consumer group 'my-first-app' has no active members.
+
+TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+first_topic     0          11              13              2               -               -               -
+first_topic     1          10              12              2               -               -               -
+first_topic     2          13              15              2               -               -               -
+
+Here in consumer grop - my-first-app showing LAG messages - means not all messages consumed. 
+below command used to consume messages
+
+C:\Users\Devaansh>kafka-console-consumer --bootstrap-server localhost:9092 --topic first_topic --group my-first-app
+54
+34
+423452345345
+345
+again sending
+345
+
+now try consumer groups command it will not show any lag messages ..bcz its already consumed by kafka-consumer-consumer.
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group my-first-app
+Consumer group 'my-first-app' has no active members.
+
+TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+first-topic     2          0               0               0               -               -               -
+first_topic     2          15              15              0               -               -               -
+first_topic     1          12              12              0               -               -               -
+first_topic     0          13              13              0               -               -               -
+first-topic     1          0               0               0               -               -               -
+first-topic     0          0               0               0               -               -               -
+
+Resetting offsets of consumer groups:
+each message arrived in topic partition will b store into offsets - 1,2,3.... offset ids.
+1st Message - offset1
+2nd Message - offset2
+
+if u want to reset offset values use below command:
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group my-first-app --reset-offsets
+WARN: No action will be performed as the --execute option is missing.In a future major release, the default behavior of this command will be to prompt the user before executing the reset rather than doing a dry run. You should add the --dry-run option explicitly if you are scripting this command and want to keep the current default behavior without prompting.
+One of the reset scopes should be defined: --all-topics, --topic.
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group my-first-app --reset-offsets --execute
+
+One of the reset scopes should be defined: --all-topics, --topic.
+
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group my-first-app --reset-offsets --execute --topic first_topic
+
+resetting offsets for first_topic with initial offset ids.
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --group my-first-app --reset-offsets --to-earliest --execute --topic first_topic
+
+TOPIC                          PARTITION  NEW-OFFSET
+first_topic                    0          0
+first_topic                    2          0
+first_topic                    1          0
+
+C:\Users\Devaansh>
+
+now try to consume messages from topic then offsets will b created for topic partitions as  below.
+
+C:\Users\Devaansh>kafka-console-consumer --bootstrap-server localhost:9092 --topic first_topic --group my-first-app
+Hi Raja
+Hi Message ACKNOWLEDGED
+hellooooooooooooooo
+message3
+message6
+message3
+message6
+message9
+4
+wrwerwerwer
+werwer434234234
+54
+34
+How are u!
+hi raja
+message2
+message5
+message2
+message5
+message8
+4
+4
+wrwerwe
+423452345345
+345
+Hello Raja
+^C
+THANKS KAFKA
+Hi Publish first message to firsttopic
+message1
+message4
+cls
+message1
+message4
+
+run below command ,now again see offset ids for first_topic.
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group my-first-app
+Consumer group 'my-first-app' has no active members.
+
+TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+first-topic     2          0               0               0               -               -               -
+first_topic     2          15              15              0               -               -               -
+first_topic     1          12              12              0               -               -               -
+first_topic     0          13              13              0               -               -               -
+first-topic     1          0               0               0               -               -               -
+first-topic     0          0               0               0               -               -               -
+
+
+if we want to increment offsetids forward or backward using below --shift-by 2 and --shift-by -2 command as below.
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --group my-first-app --reset-offsets --shift-by 2 --execute --topic first_topic
+[2019-04-11 23:19:33,073] WARN New offset (15) is higher than latest offset for topic partition first_topic-0. Value will be set to 13 (kafka.admin.ConsumerGroupCommand$)
+[2019-04-11 23:19:33,073] WARN New offset (17) is higher than latest offset for topic partition first_topic-2. Value will be set to 15 (kafka.admin.ConsumerGroupCommand$)
+[2019-04-11 23:19:33,073] WARN New offset (14) is higher than latest offset for topic partition first_topic-1. Value will be set to 12 (kafka.admin.ConsumerGroupCommand$)
+
+TOPIC                          PARTITION  NEW-OFFSET
+first_topic                    0          13
+first_topic                    2          15
+first_topic                    1          12
+
+C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --group my-first-app --reset-offsets --shift-by -2 --execute --topic first_topic
+
+TOPIC                          PARTITION  NEW-OFFSET
+first_topic                    0          11
+first_topic                    2          13
+first_topic                    1          10
+
+now if you consume messages from topic first_topic only will get messages for offsetid - 11,13,10 from partition 0,1,2
+lets try below command 
+
+C:\Users\Devaansh>kafka-console-consumer --bootstrap-server localhost:9092 --topic first_topic --group my-first-app
+54
+34
+423452345345
+345
+again sending
+345
+
