@@ -116,5 +116,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/6.2/docs-bulk.html
 https://www.elastic.co/guide/en/elasticsearch/reference/5.4/indices-templates.html
 https://qbox.io/blog/elasticsearch-exploring-parent-child-relationships
 
+############# convert xsd to java classes and compile,finally convert to jar ############
+C:\Softwares\xmlbeans-2.0.0\bin>scomp -compiler "C:\Softwares\jdk1.6.0_20\bin\javac.exe" -out sampleproject-4.0.jar C:\Rajasekhar\xsd\schemaorg_apache_xmlbeans\src\*.xsd
 
 
