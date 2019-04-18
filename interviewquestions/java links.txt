@@ -33,6 +33,7 @@ https://java2blog.com/java-threadpoolexecutor-example/
 
 -------------------------
 1.why string is immutable?
+https://stackoverflow.com/questions/22397861/why-is-string-immutable-in-java
 2.real time scanrio for string ? string s="raja" (string pool) string s1 = new String("raja"); -- both objects are same or different?
 3.in whcih scenario which collection can be used?
 4.comparable vs comparator? which one is better? can we acheive custom sorting using comparable?
