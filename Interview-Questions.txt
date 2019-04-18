@@ -1,0 +1,709 @@
+1.why string is immutable?
+https://stackoverflow.com/questions/22397861/why-is-string-immutable-in-java
+2.real time scanrio for string ? string s="raja" (string pool) string s1 = new String("raja"); -- both objects are same or different?
+3.in whcih scenario which collection can be used?
+4.comparable vs comparator? which one is better? can we acheive custom sorting using comparable?
+like
+Employee e1 = new Employee();
+e1.setName("sfds");
+e1.setAge(3);
+
+Employee e2 = new Employee();
+e2.setName("ss");
+e1.setAge(5);
+
+Employee e3 = new Employee();
+e3.setName("tttt");
+e3.setAge(6);
+
+Employee e4 = new Employee();
+e1.setName("sfds");
+e1.setAge(1);
+
+want to sort based on age in desc order..can we achieve using both ways?
+
+5.HashMap h= new HashMap();
+
+Employee e1 = new Employee();
+e1.setid("x");
+e1.setAge(3);
+
+Employee e2 = new Employee();
+e2.setid("x");
+e1.setAge(5);
+
+Employee e3 = new Employee();
+e3.setid("x");
+e3.setAge(6);
+
+Employee e4 = new Employee();
+e1.setid("x");
+e1.setAge(1);
+
+h.put(e1,e1);
+h.put(e2,e2);
+h.put(e3,e3);
+h.put(e4,e4);
+
+and if we add for set? what is the output? e1,e2,e3 objects ..with same id and name.? will it remove duplicate?
+
+what is the output?
+
+
+6.hashmap vs hashset?
+7.treeset vs sortedset?
+8.LinkedList vs ArrayList?
+9.HashMap internal architecture?
+
+10.how to make collection as sysnchronized?
+where and for which we can use synchronized keyword(methods,blocks) what is the use ? which one is better?
+
+11.how to make a class immutable? including variables and methods?
+if suppose we have setters and getters for that class how we can restrict to use them?
+
+12.what is application context?
+13.how to get application context?
+
+if we write logic to get appcontext 2 times and getting some singleton bean 2 times using 2 diff application context..bith beans will print same 
+hashcode?
+
+14.controller vs rest controller
+15.how to start spring boot application without using springbootapplication annotation?
+what are the annotations being used inside springbootapplication?
+
+16.in what layer which annotation will b used?
+
+17.component annotation vs repository annotation?
+18.5th Highest salary
+19.serialization -constructor will b called - deserialization - constructor will not b called
+	implements externalizable - will not b called - desria - will b called.
+20.Hibernate n+1 select problem
+ 
+https://www.elastic.co/guide/en/elasticsearch/reference/6.2/docs-bulk.html
+https://www.elastic.co/guide/en/elasticsearch/reference/5.4/indices-templates.html
+https://qbox.io/blog/elasticsearch-exploring-parent-child-relationships
+
+elastic reindexing if we have changed mapping..
+elastic bulk insert
+what are filters in elastic and queries?
+
+
+
+----------------------------------------------------------------------------------------------------
+
+
+--------RAML TO SWAGGER---------
+oas-raml-converter --from RAML --to OAS20 C:\Rajasekhar\PROJECTS\callback-test\filedownload.raml > C:\Rajasekhar\advicedownload-swagger.json
+--------RAML TO SWAGGER---------
+
+http://www.mastertheboss.com/jboss-frameworks/resteasy/using-rest-services-to-manage-download-and-upload-of-files - DOWNLOAD/UPLOAD REST API
+#############################################################################################################
+http://www.javarticles.com/2017/03/mule-message-exchange-pattern-example.html - mule message exchage pattern
+ 
+ <apikit:config name="test-config" raml="test/test.raml" consoleEnabled="${console.enabled}" consolePath="console" doc:name="Router" />
+
+ <flow name="post:/testflow:test-config" processingStrategy="synchronous">
+	<vm:inbound-endpoint connector-ref="test-vm-connector" path="test.vm.connector.path" exchange-pattern="one-way" />
+	<!--some processing http request logic -->
+</flow>
+ <vm:connector name="test-vm-connector" createMultipleTransactedReceivers="true">
+     <vm:queue-profile maxOutstandingMessages="10000">
+        <default-in-memory-queue-store/> 
+     </vm:queue-profile>
+    </vm:connector>
+#############################################################################################################	
+	
+
+################### Kafka consumer load testing for 500 requests ###################
+package com.raja;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+
+
+public class KafkaProducerTest {
+
+    public static void main(String args[]) throws IOException, InterruptedException{
+    	
+    	FileReader fr = new FileReader(new File("C:\\Users\\Downloads\\mv-kafka-client-samples-master\\src\\main\\java\\test.txt"));
+    	StringBuffer message = new StringBuffer();
+    	
+    	BufferedReader br = null;
+
+		br = new BufferedReader(fr);
+
+		String sCurrentLine;
+
+        Properties props = new Properties();
+        props.put("bootstrap.servers", "0.20.1.1:8080"); 
+        props.put("acks", "all");
+        props.put("retries", 0);
+        props.put("batch.size", 16384);
+        props.put("linger.ms", 1);
+        props.put("buffer.memory", 33554432);
+        props.put("max.request.size", 6291456);
+        
+        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+        Producer<String, String> producer = new KafkaProducer<>(props);
+
+        while ((sCurrentLine = br.readLine()) != null) {
+			message.append(sCurrentLine.replace("\n", ""));
+        }
+			
+		//Manipulate this string and replace the deal id from sequence generator	
+        System.out.println("message -> " + message);
+        
+        for(int i=1;i<500;i++){
+        	String topicMsg = "";
+        	
+        	topicMsg = message.toString().replace("551-00001","551-0000"+(i+1));
+        	
+        	Integer partition = (int)(Math.random()*5);
+        	System.out.println("topicMsg:"+topicMsg);
+        	producer.send(new ProducerRecord<String, String>("kaf_sit_test",partition,  String.valueOf(partition), topicMsg));
+        }
+       // Integer partition = (int)(Math.random()*5);
+    	//producer.send(new ProducerRecord<String, String>("kaf_sit_test",partition,  String.valueOf(partition), topicMsg));
+
+        producer.close();
+      }
+}
+
+--using spring boot
+@EnableEncryptableProperties - enable it for boot main class
+add this dependency - <dependency>
+	       <groupId>com.github.ulisesbocchio</groupId>
+	       <artifactId>jasypt-spring-boot-starter</artifactId>
+	       <version>2.0.0</version>
+	    </dependency>
+	    
+	 add encrypted password in yml file ..then boot automatically will converted that as decrypted password if u r using it for
+	 connectiong jms connector.
+	 jms.password = ENC(sfsdfSdasdad#asda) - encrypted password
+	 <jms:connector name="jmsConnector" doc:name="JMS Webmethods Config"
+		connectionFactoryJndiName="${jms.connection.factory}" 
+		username="${jndi.username}" password="${jms.jndi.password}" 
+		jndiDestinations="true" jndiInitialFactory="${jms.context.factory}"
+		jndiProviderUrl="${jms.jndi.url}" validateConnections="true"
+		specification="1.1" />
+	    
+	    
+https://qbox.io/tutorials ---------------------------------------------------elastic search
+
+>> stackoverflow error/Outofmemory error
+>> RestTemplateAdvice/RestControllerAdvice
+>> CheckedException/UncheckedException - custom exception is checked or unchecked exception?
+>> Hibernate - One to Many(1000 records) fetch="eager" is theere any performance issue?
+>> In Functional interface if we have same method with overloaded signature as just like abstract? what will happen?
+>> stream vs parallel stream ..should i use always parallel stream for better performance?
+>> HashMap insertion order(inserted keys 1 to 100) can we get insertion order by keys ?
+>> Comparator can we apply for Maps?
+>> TreeMap sorting order?
+>> Executors if i give 1000 thread pool size for collection of 1000 objects will we get good performance? No
+>> Springboot advantages?
+>> Hibernate n+1 problem?
+>> Sonarcube?
+>> JaCoco maven plugin?
+>> JUnit integration testing?
+>> Mongodb when to use?
+>> How to preserve insertion order in HashMap?
+>> propagation levels- REQUIRED,REQUIRES-NEW when to use them?
+>> Spring AOP - pointcut,advice,joinpoint
+>> what is the difference between servlet and spring mvc servlet.
+>> http request and ajax request
+>> servlet is threadsafe?
+>> what is the benefit of making immutable?
+>> how to make immutable an object as immutable?
+>> How to preserve insertion order in HashMap?
+>> what is deadlock and how and when it will happen?
+>> Hibernate lazyness issues
+>> Transaction Management in spring
+>> hibernate vs jpa..which one is better?
+
+>> with out using component scan in springboot how do u inject dependency class into dependent class?
+	using spring.factories - src/main/resources/META-INF/spring.factories
+	ex: org.springframework.boot.env.EnvironmentPostProcessor = com.example.hello.env.LocalSettingsEnvironmentPostProcessor
+	https://github.com/snicoll-demos/hello-service-auto-configuration
+	https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-auto-configuration.html
+>> if suppose we have 2 data sources for u r application .. how do u ensure u r connecting to correct datasource in spring application.
+	using Qualifier annotation
+>> in hibernate how will u avoid partial commits - what is the annotation
+#################################### JUNIT MOCKITO
+
+@Mock creates a mock. @InjectMocks creates an instance of the class and injects the mocks that are created with the @Mock (or @Spy) annotations into this instance. 
+Note that you must use @RunWith(MockitoJUnitRunner.class) or Mockito.initMocks(this) to initialise these mocks and inject them.
+
+@RunWith(MockitoJUnitRunner.class)
+public class SomeManagerTest {
+
+    @InjectMocks
+    private SomeManager someManager;
+
+    @Mock
+    private SomeDependency someDependency; // this will be injected into someManager
+
+     //tests...
+
+}
+
+############################### SQL QUERY TO FORMAT DATE AS ISO FORMAT:
+select TO_CHAR(SYSTIMESTAMP,'YYYY-MM-DD"T"HH24:MI:SS.FFTZR') from dual;
+DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sZ");
+String s = sdf.format(new Date());
+String date = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+
+################################ MONGODB:
+var now = new Date();
+print(now.getTimezoneOffset());
+db.mycollection.save( { date: now,
+                offset: now.getTimezoneOffset() } );
+
+db.getCollection('mycollection').find({});
+var record = db.mycollection.findOne();
+print(record); 
+var localNow = new Date( record.date.getTime() -  ( record.offset * 60000 ) );
+print(localNow); 
+
+TO SEE QUERY EXECUTION STATISTICS:
+db.getCollection('collection-name').find({}).explain("executionStats");
+--create index in mongodb for columns
+db.COLLECTION-NAME.createIndex({ student: 1, type: 1 });
+--create index programatically using spring data mongodb
+
+############################ save mongo collection date with iso format - mongodb by default stores date in UTC time stamp.
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createDate;
+    
+    //CREATE INDEX FOR MONGO COLLECTION
+    @Document
+    @CompoundIndex(def = "{'firstName':1, 'salary':1}", name = "person_index")
+    public class Person {
+    @Id private String id;
+    
+########################## NPM INSTALL
+npm set repository http://registry.npmjs.org/
+npm set proxy http://00:00:00:00:8080/ 
+1.npm install
+2.npm run build
+3.npm start 
+
+########################## spring data mongodb lookup operation - join with other collection
+    Employee e =new Employee();
+		e.set_id("1");
+		e.setDept_id("100");
+		e.setName("Raja");
+		
+		Department d = new Department();
+		d.set_id("100");
+		d.setDept_name("XYZ");
+		
+		
+		this.mongoTemplate.insert(e, "employee");
+		this.mongoTemplate.insert(d, "department");
+		
+		LookupOperation lookupOperation = LookupOperation.newLookup()
+                .from("department")
+                .localField("dept_id")
+                .foreignField("_id")
+                .as("departments");
+	    Aggregation aggregation = Aggregation.newAggregation(
+	    		match(new Criteria("_id").is("1")) , lookupOperation);
+	    List<EmpDeptResult> results = mongoTemplate.aggregate(aggregation, Employee.class, EmpDeptResult.class).getMappedResults();
+	    System.out.println(results);
+	    this.mongoTemplate.dropCollection("employee");
+	    this.mongoTemplate.dropCollection("department");
+	    
+	    >> https://stackoverflow.com/questions/44471800/spring-data-match-and-filter-nested-array
+	    >> https://stackoverflow.com/questions/43470578/spring-data-mongo-db-query-embedded-array
+	    >> https://stackoverflow.com/questions/44949720/spring-mongotemplate-mapping-aggregation-result-to-collections-e-g-list-and
+	    >> https://github.com/spring-projects/spring-data-mongodb/blob/master/src/main/asciidoc/reference/mongo-repositories.adoc
+		
+		List<AggregationOperation> list = new ArrayList<AggregationOperation>();
+		list.add(Aggregation.unwind("documentRequest"));
+		list.add(Aggregation.unwind("documentRequest.documentDetails"));
+		list.add(Aggregation.match(Criteria.where("documentRequest.documentDetails.docId").is("DOC1")));
+		list.add(Aggregation.match(Criteria.where("documentRequest.documentDetails.customerId").is("11111111")));
+		list.add(Aggregation.project().andExclude("_id"));
+					ObjectMapper mapper = new ObjectMapper();
+					mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+
+		TypedAggregation<DocumentRequestObj> agg = Aggregation.newAggregation(DocumentRequestObj.class, list);
+		List<Document> dbObjects = mongoTemplate.aggregate(agg, "document_grouping", Document.class).getMappedResults();     
+		System.out.println(dbObjects.get(0).toJson());
+		//mongoTemplate.getConverter().read(DocumentRequestObj.class, dbObjects.get(0));
+
+//Pagination Mongodb Query Criteria
+	Criteria criteriaType = new Criteria();
+		Query query = new Query(criteriaType);
+		PageRequest pageableRequest = new PageRequest(pagenumber - 0, pagesize -10, new Sort(new Sort.Order(Sort.Direction.DESC, "iso_timestamp")));
+		query.with(pageableRequest); 
+
+######################### Hibernate fetch strategy
+@Entity
+@Table
+public class Parent {
+    @Id
+    private Long id;
+
+    @OneToMany(mappedBy="parent", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    private List<Child> child;    
+    //getter setters
+}
+
+@Entity
+@Table
+public class Child {    
+    @Id
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Parent parent;
+
+    //getter setter
+}
+In above example, when getting Parent entity, hibernate will automatically load all child entities eagerly using join. On the other hand, 
+when you fetch Child, Parent entity won't be selected unless you call it explicity in your code child.getParent().
+FetchType (Lazy/Eager) tells whether we want entity to be loaded eagerly or lazy, when there's call in code.
+FetchMode (Select/Join) tells whether we want our entitity to be loaded with additional select or in one query with join or subselect.
+>>FetchMode : It defines how hibernate (using which strategy, e.g. Join, SubQuery etc) will fetch data from database.
+>>FetchType : It defines whether hibernate will fetch the data or not.
+NOTE : FetchMode is only applicable when FetchType = EAGER while annotation.
+
+>>https://docs.mulesoft.com/mule-user-guide/v/3.6/splitter-flow-control-reference#full-example-code-3
+>>https://docs.mulesoft.com/mule-user-guide/v/3.6/scatter-gather
+-------------Oracle 12c---------------------
+alter session set container=orclpdb;
+create user raja identified by raja;
+grant create session to raja;
+connect raja/raja@orclpdb;--pluggable database.	
+
+//ELASTIC SEARCH
+to see content of elastic index:
+curl -H 'Content-Type: application/json' -X GET https://localhost:9200/index_name/_search?pretty
+>> PRIME NG module for graphs,charts,grids - Angular 
+>> Lombak - maven plugin - annotate @lombak for your pojo then it will create setter and getters internally.
+<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.0</version>
+    <scope>provided</scope>
+</dependency>
+@Entity
+@Getter @Setter @NoArgsConstructor // <--- THIS is it
+public class User implements Serializable {
+ 
+    private @Id Long id; // will be set when persisting
+ 
+    private String firstName;
+    private String lastName;
+    private int age;
+  
+ ///////////////////////////// Elastic ////////////////////////////////////
+    PUT localhost:9200/books?&pretty - CREATE INDEX books
+curl -XPUT 'localhost:9200/books?&pretty'
+
+GET localhost:9200/books/_mapping?&pretty - mappings for index
+CURL -XGET 'localhost:9200/books/_mapping?&pretty'
+ 
+curl -XPOST 'localhost:9200/books/fiction/1?&pretty' -d @books.json -H 'Content-Type: application/json'
+localhost:9200/books/fiction/1?&pretty
+
+books.json:
+{
+"name":"Java",
+"author":"Rajasekhar",
+"cost":"200.50",
+"Available":"true",
+"publishers":"Graham Hills",
+"date":"2018-05-07"
+}
+
+####################### Example for create daily elastic search index ###################
+
+https://www.elastic.co/guide/en/x-pack/current/securing-aliases.html
+
+import com.google.common.io.ByteStreams;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.scb.batch.entity.Invoice;
+import io.searchbox.client.JestClient;
+import io.searchbox.client.JestClientFactory;
+import io.searchbox.client.JestResult;
+import io.searchbox.client.config.HttpClientConfig;
+import io.searchbox.core.*;
+import io.searchbox.indices.CreateIndex;
+import io.searchbox.indices.IndicesExists;
+import io.searchbox.indices.aliases.AddAliasMapping;
+import io.searchbox.indices.aliases.ModifyAliases;
+import io.searchbox.indices.mapping.PutMapping;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
+public class DailyElasticSearch {
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    private static final Gson gson = new GsonBuilder().setDateFormat(DATE_FORMAT).create();
+
+    @Test
+    public void createDailyIndex() throws IOException {
+
+        HttpClientConfig.Builder httpClientConfigBuilder = new HttpClientConfig
+                .Builder("http://10..1.1.1:8080/")
+                .connTimeout(90000)
+                .readTimeout(90000)
+                .maxConnectionIdleTime(1, TimeUnit.MINUTES)
+                .requestCompressionEnabled(true)
+                .maxTotalConnection(8)
+                .gson(gson)
+                .multiThreaded(true);
+//        if(elasticConfiguration.getUsername() != null){
+//            httpClientConfigBuilder.defaultCredentials(elasticConfiguration.getUsername(), elasticConfiguration.getPassword());
+//        }
+        JestClientFactory factory = new JestClientFactory();
+        factory.setHttpClientConfig(httpClientConfigBuilder.build());
+        JestClient client = factory.getObject();
+
+        String businessDateMonthYear = "2018-05-03";
+        Calendar.getInstance().getTime();
+
+        ////////////////
+        //CREATE INDEX//
+        ////////////////
+        String indexName = StringUtils.lowerCase("raja_index_testing"
+                + "_" + businessDateMonthYear);
+
+        String mappingJson = new String(ByteStreams.toByteArray(this.getClass().getClassLoader().getResourceAsStream("raja_index_testing_mapping.json")));
+
+        //check if index exists
+        boolean indexExists = client.execute(new IndicesExists.Builder(indexName).build()).isSucceeded();
+
+        //create index
+        if (!indexExists) {
+            client.execute(new CreateIndex.Builder(indexName).build());
+            client.execute(new PutMapping.Builder(indexName, "invoice", mappingJson).build());
+        }
+
+        List<Index> indices = new ArrayList<>();
+
+        Product product1 = new Product();
+        product1.setName("product 1");
+        product1.setId(Integer.toString(ThreadLocalRandom.current().nextInt(10000, 90000)));
+
+        String id = product1.getId();
+        System.out.println("product 1 : " + id);
+
+        Product product2 = new Product();
+        product2.setName("product 2");
+        product2.setId(Integer.toString(ThreadLocalRandom.current().nextInt(10000, 90000)));
+        System.out.println("product 2 : " + product2.getId());
+
+        indices.add(new Index.Builder(product2).build());
+        indices.add(new Index.Builder(product1).build());
+
+        ////////////////////////////////////
+        //WRITE DOCUMENTS                 //
+        //NOTE, WE'RE WRITING ON THE INDEX//
+        //AND NOT ON THE ALIAS            //
+        ////////////////////////////////////
+        Bulk bulk = new Bulk.Builder()
+                .defaultIndex(StringUtils.lowerCase("raja_index_testing"
+                        + "_" + businessDateMonthYear))
+                .defaultType("product")
+                .addAction(indices)
+                .build();
+
+        BulkResult result = client.execute(bulk);
+
+        System.out.println("Data inserted : " + result.isSucceeded());
+
+        ////////////////
+        //ADD ALIAS   //
+        ////////////////
+        if(!indexExists) {
+            ModifyAliases modifyAliases = new ModifyAliases.Builder(
+                    new AddAliasMapping
+                            .Builder(
+                            "raja_index_testing_" + businessDateMonthYear,
+                            "raja_index_testing"
+                    )
+                            .build())
+                    .build();
+
+            JestResult assignAliasResult = client.execute(modifyAliases);
+            System.out.println("Alias assigned : " + assignAliasResult.isSucceeded());
+        }
+
+        /////////////////////////////////////
+        //SEARCH DOCUMENTS                 //
+        //NOTE, WE'RE READING ON THE ALIAS //
+        //AND NOT ON THE INDEX NAME        //
+        /////////////////////////////////////
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(QueryBuilders.fuzzyQuery("ID", ID1));
+        Search search = (Search) new Search.Builder(searchSourceBuilder.toString())
+                // multiple index or types can be added.
+                .addIndex("raja_index_testing")
+                .addType("product")
+                .build();
+
+        JestResult searchResult = client.execute(search);
+        System.out.println("Which Index " + Id1 + " in : " + ((SearchResult) searchResult).getHits(Product.class).get(0).index);
+	
+	/*
+	private static void elasticSearch(JestClient client, String indexName, String type, String query) {
+	SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+	QueryStringQueryBuilder queryStringQueryBuilder = QueryBuilders.queryStringQuery(query);
+	searchSourceBuilder.query(queryStringQueryBuilder);
+	Search searchElastic = (Search) new Search.Builder(searchSourceBuilder.toString())
+			// multiple index or types can be added.
+			.addIndex(indexName).addType(type).build();
+
+	try {
+		SearchResult elasticRs = client.execute(searchElastic);
+
+		List<Hit<Article, Void>> hits = elasticRs.getHits(Product.class);
+		for (Hit<Article, Void> hit : hits) {
+			Product product = hit.source;
+			System.out.println("Elastic hits: " + product.toString());
+		}
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	}
+	**/
+    }
+}
+//bool query to fetch exact data based on given criteria
+POST products_catalog/products/_search
+{
+    "query": {
+      "bool": {
+        "must": [
+        {
+          "terms": {
+            "countryCode.keyword": [
+              "SG"
+            ]
+          }
+        },
+        {
+          "terms": {
+            "customerId.keyword": [
+             "2342342"
+            ]
+          }
+        },  
+        {
+          "terms": {
+            "dealRefNo.keyword": [
+              "W00001"
+            ]
+          }
+        }
+      ]
+      }
+    }
+  }
+  //end
+
+//src/main/resources folder - raja_mapping.json
+{
+  "properties": {
+    "@timestamp": {
+      "type": "date"
+    },
+    "@version": {
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "null_value": "NULL",
+          "ignore_above": 256
+        }
+      }
+    },
+    "name": {
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "null_value": "NULL",
+          "ignore_above": 256
+        }
+      }
+    },
+    "amount": {
+      "type": "scaled_float",
+      "scaling_factor": 100
+    },
+    "amt_ccy": {
+      "type": "scaled_float",
+      "scaling_factor": 100
+    },
+    "bizdate": {
+      "type": "date"
+    }
+  }
+}
+##################ANGULAR#############
+Life cycle hooks
+Routing
+Lazy loading
+Dependency injection
+Difference between Angularjs(1) vs Angular (2)
+Obsevables vs Promise
+Service
+Component to Component communication
+Component vs Directive
+Whats is Ngmodule
+Imports vs Declarations in module file
+@viewchild & @contentchild
+Routeroutlet
+Rxjs concepts
+How do you call a rest service
+Input vs Output
+Form validations
+Reactive form
+Behavioural Subject
+Pipes
+Httpclient
+Parent child components unayi ela data pass chesthav
+Authguards concept chusuko
+Routing chesetappudu data ela pass chesthav
+Routing ni condition based ela restrict chesthav
+Security implementation while calling rest service - JWT token implementation
+map vs subscribe
+angular modules
+promise
+
+
+200 OK	Successful.
+201 Created	Created.
+400 Bad Request	Bad input parameter. Error message should indicate which one and why.
+401 Unauthorized	The client passed in the invalid Auth token. Client should refresh the token and then try again.
+403 Forbidden	* Customer doesn’t exist. * Application not registered. * Application try to access to properties not belong to an App. * Application try to trash/purge root node. * Application try to update contentProperties. * Operation is blocked (for third-party apps). * Customer account over quota.
+404 Not Found	Resource not found.
+405 Method Not Allowed	The resource doesn't support the specified HTTP verb.
+409 Conflict	Conflict.
+411 Length Required	The Content-Length header was not specified.
+412 Precondition Failed	Precondition failed.
+429 Too Many Requests	Too many request for rate limiting.
+500 Internal Server Error	Servers are not working as expected. The request is probably valid but needs to be requested again later.
+503 Service Unavailable	Service Unavailable.
