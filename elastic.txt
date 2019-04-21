@@ -1,4 +1,7 @@
 https://www.elastic.co/guide/en/x-pack/current/securing-aliases.html
+
+reindex api - https://medium.com/@eyaldahari/reindex-elasticsearch-documents-is-easier-than-ever-103f63d411c
+
 pom dependencies for elastic search:
 <!-- elastic search dependencies -->
 		<dependency>
