@@ -1,15 +1,18 @@
 start zookeeper :
-C:\Rajasekhar\Softwares\kafka_2.12-2.1.1>zookeeper-server-start.bat config\zookeeper.properties
+C:\Rajasekhar\Softwares\kafka_2.12>zookeeper-server-start.bat config\zookeeper.properties
 
 start kafka-server:
 
-C:\Rajasekhar\Softwares\kafka_2.12-2.1.1>kafka-server-start.bat config\server.properties
+C:\Rajasekhar\Softwares\kafka_2.12>kafka-server-start.bat config\server.properties
 
 Kafka Topics CLI:
 
-]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create 										>> ERROR Missing required argument "[partitions]"
-]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create --partitions 3 	>>ERROR Missing required argument "[replication-factor]"
-]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create --partitions 3 --replication-factor 2 >>ERROR while executing topic command : Replication factor: 2 larger than available brokers: 1.
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create 										
+>> ERROR Missing required argument "[partitions]"
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create --partitions 3 	
+>>ERROR Missing required argument "[replication-factor]"
+]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create --partitions 3 --replication-factor 2 
+>>ERROR while executing topic command : Replication factor: 2 larger than available brokers: 1.
 ]kafka-topics --zookeeper 127.0.0.1:2181 --topic "first_topic" --create --partitions 3 --replication-factor 1
 ]kafka-topics --zookeeper 127.0.0.1:2181 --list
 ]kafka-topics --zookeeper 127.0.0.1:2181 --topic first-topic --describe
@@ -440,7 +443,7 @@ first_topic                    0          11
 first_topic                    2          13
 first_topic                    1          10
 
-now if you consume messages from topic first_topic only will get messages for offsetid - 11,13,10 from partition 0,1,2
+now if you consume messages from topic first_topic only will get messages for offsetid - 11,13,10 from partition 0,2,1
 lets try below command 
 
 C:\Users\Devaansh>kafka-console-consumer --bootstrap-server localhost:9092 --topic first_topic --group my-first-app
@@ -451,3 +454,57 @@ C:\Users\Devaansh>kafka-console-consumer --bootstrap-server localhost:9092 --top
 again sending
 345
 
+
+
+Producer With Keys: 
+if we send messages with producer key messages always will go and store in same partition even if we try to produce messages multiple times.
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_0
+[kafka-producer-network-thread | producer-1] INFO com.raja.kafka.ProducerDemoKeys - New Metadata received Topic: first_topic
+partition:1
+offsetid:18
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_1
+[kafka-producer-network-thread | producer-1] INFO com.raja.kafka.ProducerDemoKeys - New Metadata received Topic: first_topic
+partition:0
+offsetid:19
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_2
+[kafka-producer-network-thread | producer-1] INFO com.raja.kafka.ProducerDemoKeys - New Metadata received Topic: first_topic
+partition:2
+offsetid:25
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_3
+[kafka-producer-network-thread | producer-1] INFO com.raja.kafka.ProducerDemoKeys - New Metadata received Topic: first_topic
+partition:0
+offsetid:20
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_4
+[kafka-producer-network-thread | producer-1] INFO com.raja.kafka.ProducerDemoKeys - New Metadata received Topic: first_topic
+partition:2
+offsetid:26
+
+---------------------2nd time---------
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_0
+partition:1
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_1
+partition:0
+offsetid:21
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_2
+partition:2
+offsetid:27
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_3
+partition:0
+offsetid:22
+
+[main] INFO com.raja.kafka.ProducerDemoKeys - Key:id_4
+partition:2
+[main] INFO org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+
+--consumergroups rebalancing:
+
+start 3 cosnumers for same topic then each consumer will be assigned to different partition where as for single consumer all partitions assigned to single consumer.
+if one consumer went down then other 2 consumers will b rebalanced with partitions.
