@@ -507,7 +507,7 @@ partition:2
 --consumergroups rebalancing:
 
 start 3 cosnumers for same topic then each consumer will be assigned to different partition where as for single consumer all partitions assigned to single consumer.
-if one consumer went down then other 2 consumers will b rebalanced with partitions.
+if one consumer went down from the group then other 2 consumers will b rebalanced with partitions.
 
 C:\Users\Devaansh>kafka-consumer-groups --bootstrap-server localhost:9092 --group demo-app --describe
 
