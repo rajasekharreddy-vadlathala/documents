@@ -707,3 +707,10 @@ promise
 429 Too Many Requests	Too many request for rate limiting.
 500 Internal Server Error	Servers are not working as expected. The request is probably valid but needs to be requested again later.
 503 Service Unavailable	Service Unavailable.
+
+
+WHAT IS ci/cd?
+what is spring session?
+spring cloud selueth for tracking request across all the microservices?
+JWT Implementation?
+what is TDD?
