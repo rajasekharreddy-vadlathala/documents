@@ -714,3 +714,4 @@ what is spring session?
 spring cloud selueth for tracking request across all the microservices?
 JWT Implementation?
 what is TDD?
+how to trace hibernate long running queries?
