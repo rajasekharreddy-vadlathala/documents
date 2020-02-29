@@ -711,7 +711,8 @@ promise
 
 WHAT IS ci/cd?
 what is spring session?
-spring cloud selueth for tracking request across all the microservices?
+spring cloud sleuth for tracking request across all the microservices?
 JWT Implementation?
 what is TDD?
 how to trace hibernate long running queries?
+what id type erasure in generics java?
