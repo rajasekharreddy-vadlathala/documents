@@ -721,3 +721,8 @@ inheritance in hibernate?
 hibernate n+1 problem?
 how to monitor long running hibernate queries in micro services?
 Spock testing framework?
+how to print triangles for given input?
+how to sort given strings without loosing leading zero for the numbers?
+0516,899,312,788,900 - '312' '0516' '788','899', '900'
+in hibernate how t o use additional field which dont have column in db .. only use it for some processing ..what is the annotation can be used?
+strategy design pattern and reflection?
