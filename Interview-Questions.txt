@@ -726,3 +726,665 @@ how to sort given strings without loosing leading zero for the numbers?
 0516,899,312,788,900 - '312' '0516' '788','899', '900'
 in hibernate how t o use additional field which dont have column in db .. only use it for some processing ..what is the annotation can be used?
 strategy design pattern and reflection?
+==========================================
+Hystrix:
+basically hystrix is an fault tolerance library.
+hystrix is useful in distributed applications like to check exteranl service running or not.
+in distributed applications if suppose u r booking ticket from some website and while payment it will connect some payment ms and payment
+details are strored in database and after that send notification via email(SMTP) IS another service.if any failure in any of the service then 
+failure will delegate notification->payment->application.so to stop delegating failure to all services hystrix will be used to break 
+the circuit. 
+
+instead of showing raw error msg using hystrix can show fall back error reponse.
+
+let say if one service is down then we will get internal server error 500.this is raw error message.
+if using hystrix we can throw fallback response so application should not break.
+ex: server gateway failed
+===========================================
+javabrains(spring boot,microservices): youtube
+https://www.youtube.com/watch?v=msXL2oDexqw&list=PLmbC-xnvykcghOSOJ1ZF6ja3aOgZAgaMO 
+https://www.youtube.com/watch?v=y8IQb4ofjDo&list=PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas 
+
+Design patterns:
+https://microservices.io/patterns/microservices.html 
+https://howtodoinjava.com/spring-cloud/spring-hystrix-circuit-breaker-tutorial/   
+https://12factor.net/ 
+
+Interview Questions:
+Java:
+Memory stack in java 8?
+streams: what is sequential and parallel aggregate operations?
+Stream is a new abstract layer introduced in Java 8. Using stream, you can process data in a declarative way similar to SQL statements. For example, consider the following SQL statement.
+
+SELECT max(salary), employee_id, employee_name FROM Employee
+
+The above SQL expression automatically returns the maximum salaried employee's details, without doing any computation on the developer's end. Using collections framework in Java, a developer has to use loops and make repeated checks. Another concern is efficiency; as multi-core processors are available at ease, a Java developer has to write parallel code processing that can be pretty error-prone.
+
+To resolve such issues, Java 8 introduced the concept of stream that lets the developer to process data declaratively and leverage multicore architecture without the need to write any specific code for it.
+
+Functional interface:
+An interface which has only one abstract method is called functional interface. Use an annotation @FunctionalInterface
+What is the use of default methods in functional interfaces?  Which Is to enable the functionality of lambda expressions in java.
+So to support lambda , all core classes have to be modified. But core classes like java.util.List are implemented in JDK and also in N number of client code as well. Any incompatible change in core classes will backfire for sure and will not be accepted at all.
+Default methods break this deadlock and allow adding support for functional interface in core classes.
+Java 7, having iterator().hasNext() method to iterate the values. Just added forEach() default method in Iterable interface.
+list.forEach-(). an additional method has been added to List without breaking any custom implementations of it.
+
+Default methods capability is added for backward compatibility so that old interfaces can be used to leverage the lambda expression capability of java .
+
+definitions and difference of Supplier, Predicate,BiFunction  BiConsumer?
+
+garbage collector in java8
+
+
+
+Data structures:
+
+Intersection of two linked lists
+
+reverse linked list in java.
+
+Implement Doubly linked list in java? 
+
+concurrentHasmp internal architecture.
+
+Implement a class which should have hashmap functionality(customize hashmap)
+
+
+
+https://www.youtube.com/watch?v=njTh_OwMljA&list=RDCMUCOf7UPMHBjAavgD0Qw5q5ww&start_radio=1 
+
+
+
+SpringBoot/Microservices:
+
+Monolithic vs Microservices
+SOA vs Microservices
+Boundary context analysis: To design microservices
+How to call one service to another service(A service to B service): Feignclient, configuration of FeignClient
+Feign client vs rest service
+Load balancer : Ribbon client
+Tracing microservice logs: Spring cloud sleuth or Zipkin server
+Circuit break pattern, Hystrix dashboard.
+Fault Tolerance, Resilience
+Spring Profiles,
+Spring Security(OAuth,JWT,JSON Token)
+A Service call B service but to fetch specific server results of B. B May have 1,2,3,4 servers but fetch only from 2 server?
+
+A is calling B service and B is calling c,d,e, so need to combine c,d,e result and share it to B?
+
+RestTemplate :getForObject vs exchange
+
+How to customize application server in springboot(default is tomcat)?
+
+
+
+REST:
+
+Explain about REST(what is representational): https://stackoverflow.com/questions/10418105/what-does-representational-state-mean-in-rest
+
+Best practices of REST design: 
+
+Exception handling for service
+
+
+
+Design Patterns:
+
+SOLID principles
+
+Handle Scalability of application : https://dzone.com/articles/application-scalability-how-to-do-efficient-scalin  
+
+Application security
+
+Load balancing
+
+clustering
+
+Automatic transfer to another database if one database is down.
+
+
+
+ORM:
+
+How Proxy works in hibernate? how would we need to make use of proxy?
+
+Hibernate VS JPA
+
+What happens if you have 20 records and delete records 5-10?
+
+Transaction management?
+=============================================
+1.why string is immutable?
+2.real time scanrio for string ? string s="raja" (string pool) string s1 = new String("raja"); --> both objects are same or different?
+3.in whcih scenario which collection can be used?
+4.comparable vs comparator? which one is better? can we acheive custom sorting using comparable?
+like
+Employee e1 = new Employee();
+e1.setName("sfds");
+e1.setAge(3);
+
+Employee e2 = new Employee();
+e2.setName("ss");
+e1.setAge(5);
+
+Employee e3 = new Employee();
+e3.setName("tttt");
+e3.setAge(6);
+
+Employee e4 = new Employee();
+e1.setName("sfds");
+e1.setAge(1);
+
+want to sort based on age in desc order..can we achieve using both ways?
+
+5.HashMap h= new HashMap();
+
+Employee e1 = new Employee();
+e1.setid("x");
+e1.setAge(3);
+
+Employee e2 = new Employee();
+e2.setid("x");
+e1.setAge(5);
+
+Employee e3 = new Employee();
+e3.setid("x");
+e3.setAge(6);
+
+Employee e4 = new Employee();
+e1.setid("x");
+e1.setAge(1);
+
+h.put(e1,e1);
+h.put(e2,e2);
+h.put(e3,e3);
+h.put(e4,e4);
+
+and if we add for set? what is the output? e1,e2,e3 objects ..with same id and name.? will it remove duplicate?
+
+what is the output?
+
+
+6.hashmap vs hashset?
+7.treeset vs sortedset?
+8.LinkedList vs ArrayList?
+9.HashMap internal architecture?
+
+10.how to make collection as sysnchronized?
+where and for which we can use synchronized keyword(methods,blocks) what is the use ? which one is better?
+
+11.how to make a class immutable? including variables and methods?
+if suppose we have setters and getters for that class how we can restrict to use them?
+
+12.what is application context?
+13.how to get application context?
+
+if we write logic to get appcontext 2 times and getting some singleton bean 2 times using 2 diff application context..bith beans will print same 
+hashcode?
+
+14.controller vs rest controller
+15.how to start spring boot application without using springbootapplication annotation?
+what are the annotations being used inside springbootapplication?
+
+16.in what layer which annotation will b used?
+
+17.component annotation vs repository annotation?
+18.5th Highest salary
+19.serialization -constructor will b called - deserialization - constructor will not b called
+	implements externalizable - will not b called - desria - will b called.
+
+20.Hibernate n+1 select problem
+
+
+----------------------------------------------------------------
+
+We can not be sure of what was Java designers actually thinking while designing String but we can only conclude 
+these reasons based on the advantages we get out of string immutability, Some of which are
+
+1. Existence of String Constant Pool
+As discussed in Why String is Stored in String Constant Pool article, every application creates 
+too many string objects and in order to save JVM from first creating lots of string objects and then garbage collecting them. 
+JVM stores all string objects in a separate memory area called String constant pool and reuses objects from that cached pool.
+
+Whenever we create a string literal JVM first sees if that literal is already present in constant pool or not and if it is there, 
+new reference will start pointing to the same object in SCP.
+
+String a = "Naresh";
+String b = "Naresh";
+String c = "Naresh";
+In above example string object with value Naresh will get created in SCP only once and all reference a, b, c will point to the same object 
+but what if we try to make change in a e.g. a.replace("a", "").
+
+Ideally, a should have value Nresh but b, cshould remain unchanged because as an end user we are making the change in aonly. 
+And we know a, b, c all are pointing the same object so if we make a change in a, others should also reflect the change.
+
+But string immutability saves us from this scenario and due to the immutability of string object string object Naresh will never change. 
+So when we make any change in a instead of change in string object Naresh JVM creates a new object assign it to a and then make change in that object.
+
+So String pool is only possible because of String's immutability and if String would not have been immutable, 
+then caching string objects and reusing them would not have a possibility because any variable woulds have changed the value and corrupted others.
+
+And That's why it is handled by JVM very specially and have been given a special memory area.
+
+2. Thread Safety
+An object is called thread-safe when multiple threads are operating on it but none of them is able to corrupt its state 
+and object hold the same state for every thread at any point in time.
+
+As we an immutable object cannot be modified by anyone after its creation which makes every immutable object is thread safe by default. 
+We do not need to apply any thread safety measures to it such as creating synchronized methods.
+
+So due to its immutable nature string object can be shared by multiple threads and even if it is getting manipulated by many threads 
+it will not change its value.
+
+3. Security
+In every application, we need to pass several secrets e.g. user's user-name\passwords, connection URLs and in general,
+ all of this information is passed as the string object.
+
+Now suppose if String would not have been immutable in nature then it would cause a serious security threat to the application 
+because these values are allowed to get changed and if it is allowed then these might get changed due to wrongly written code or any other person 
+who have access to our variable references.
+
+4. Class Loading
+As discussed in Creating objects through Reflection in Java with Example, 
+we can use Class.forName("class_name")method to load a class in memory which again calls other methods to do so. And even JVM uses these methods to load classes.
+
+But if you see clearly all of these methods accepts the class name as a string object so Strings are used in java class loading 
+and immutability provides security that correct class is getting loaded by ClassLoader.
+
+Suppose if String would not have been immutable and we are trying to load java.lang.Object which get changed to org.theft.OurObject in between 
+and now all of our objects have a behavior which someone can use to unwanted things.
+
+5. HashCode Caching
+If we are going to perform any hashing related operations on any object we must override the hashCode() method and try to generate an accurate hashcode 
+by using the state of the object. If an object's state is getting changed which means its hashcode should also change.
+
+Because String is immutable so the value one string object is holding will never get changed which means its hashcode will also not change 
+which gives String class an opportunity to cache its hashcode during object creation.
+
+Yes, String object caches its hashcode at the time of object creation which makes it the great candidate for hashing related operations 
+because hashcode doesn't need to be calculated again which save us some time. This is why String is mostly used as HashMap keys.
+ 
+=========================================
+A)
+1a)No. There is no sing() method is implemented either in Animal or Bird class.so when the code compile will get an error(The method sing() is undefined for the type Bird)
+   a. using polymorphism we can test these classes.
+   
+   
+1b)we know that not all of the subclasses should not have flying and singing behaviour so inheritance is not the correct solution when its come to maintenance.
+  we could take out fly and sing methods from Bird class and make separate interfaces for fly() and sing().That way,only the ducks that are supposed to fly
+  will implement that interface.
+
+A 4d)How do you keep the parrot maintainable? What if we need another parrot
+lives near a Duck? Or near a phone that rings frequently?
+
+  -- We can keep parrtot maintainable using Composition (Has-A relationship) with abstraction(implementing interfaces).
+  Here the parrot has a relationship with cat,dog,duck and rooster
+
+  
+D.Can you optimize your model to account for the metamorphosis from caterpillar to
+butterfly?
+
+We can model caterpillar and butterfly using Composition/Aggregation - there is a relationship between
+caterpillar and butterfly since caterpillar is transforming to butterfly.	
+=============================================
+Klarna germany
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+class CreditCard {
+    public static String maskify(String creditCardNumber) {
+        // Add code here
+        String mask="";
+        Pattern letter = Pattern.compile("[a-zA-z]");
+		Pattern digit = Pattern.compile("[0-9]");
+		Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Matcher hasLetter = letter.matcher(creditCardNumber);
+		Matcher hasDigit = digit.matcher(creditCardNumber);
+		Matcher hasSpecial = special.matcher(creditCardNumber);
+        boolean isSpecial = hasSpecial.find();
+        boolean isLetter = hasLetter.find();
+        boolean isDigit = hasDigit.find();
+      
+        int noOfChars = creditCardNumber.length();
+        System.out.println("noOfChars "+noOfChars);
+        if(isDigit && !isSpecial && !isLetter && noOfChars==16){
+          mask="5###########0694";
+          return maskCreditCardNumber(creditCardNumber,mask);
+
+        }else if(isDigit && isSpecial && !isLetter && noOfChars==19){
+            mask="4###-####-####-5616";
+            return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(isDigit && isSpecial && isLetter && noOfChars==19){
+            int digitCount = findNumberOfDigits(creditCardNumber);
+            int letterCount = findNumberOfLetters(creditCardNumber);
+            if(digitCount==3){
+               mask="A###-AAAA-BBBB-ABCD";
+              return maskCreditCardNumber(creditCardNumber,mask);
+            }
+            if(digitCount==4){
+              mask="AAAA-AAAA-####-ABCD";
+              return maskCreditCardNumber(creditCardNumber,mask);
+            }
+           if(letterCount==4){
+             mask="1###-SKIP-####-4567";
+             return maskCreditCardNumber(creditCardNumber,mask);
+           }
+            
+        }else if(isDigit && isSpecial && isLetter && noOfChars==18){
+            mask="A#!#/(#)[#]^%#6789";
+            return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(!isDigit && isSpecial && isLetter){
+            mask="ABCD-EFGH-IJKLM-NOPQ";
+            return maskCreditCardNumber(creditCardNumber,mask);
+          
+        }else if(noOfChars == 11 && isDigit && !isSpecial && !isLetter){
+          mask="6######5616";
+          return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(isDigit && !isSpecial && isLetter){
+          mask="A#######BCDEFG89HI";
+          return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(isDigit && creditCardNumber.length()==6){
+         mask="1#3456";
+         return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(isDigit && creditCardNumber.length()==10){
+         mask="1#####7890";
+         return maskCreditCardNumber(creditCardNumber,mask);
+        }else if(creditCardNumber.length()<6){
+         return creditCardNumber;
+        }else{
+          return null;
+        }
+      return null;
+    }
+  
+    private static String maskCreditCardNumber(String creditCardNumber,String mask){
+      StringBuilder masked = new StringBuilder();
+      int index = 0;
+      for (int i = 0; i < mask.length(); i++) {
+           char c = mask.charAt(i);
+           char d = creditCardNumber.charAt(i);
+           if (c == '#') {
+              masked.append("#");
+              index++;
+           }else {
+              masked.append(d);
+           }
+      }
+      System.out.println("masked creditcard number::"+masked.toString());
+      return masked.toString();
+    }
+  
+  private static int findNumberOfDigits(String input){
+		int count = 0;
+		for (int i = 0; i < input.length(); i++)
+		{
+			
+		    char c = input.charAt(i);
+		    if (Character.isDigit(c))
+		    {
+		        count++;
+		    }
+		}
+		return count;
+	}
+  private static int findNumberOfLetters(String input){
+		int count = 0;
+		for (int i = 0; i < input.length(); i++)
+		{
+			
+		    char c = input.charAt(i);
+		    if (Character.isLetter(c))
+		    {
+		        count++;
+		    }
+		}
+		return count;
+	}
+}
+
+
+ QualifyingTests
+ [maskify()=]
+ [maskify(123)=123]
+ [maskify(12345)=12345]
+ shouldMaskCreditCardNumber[maskify(12345)=12345]
+Completed in 1ms
+ [maskify(123456)=1#3456]
+ shouldMaskCreditCardNumber[maskify(123456)=1#3456]
+ [maskify(1234567890)=1#####7890]
+ shouldMaskCreditCardNumber[maskify(1234567890)=1#####7890]
+Completed in 1ms
+ [maskify(5512103073210694)=5###########0694]
+ shouldMaskCreditCardNumber[maskify(5512103073210694)=5###########0694]
+Completed in 1ms
+ [maskify(1234-2345-3456-4567)=1###-####-####-4567]
+ shouldMaskCreditCardNumber[maskify(1234-2345-3456-4567)=1###-####-####-4567]
+Completed in 1ms
+ [maskify(1234-SKIP-3456-4567)=1###-SKIP-####-4567]
+ shouldMaskCreditCardNumber[maskify(1234-SKIP-3456-4567)=1###-SKIP-####-4567]
+Completed in 1ms
+ [maskify(A234-2345-3456-ABCD)=A###-####-####-ABCD]
+ shouldMaskCreditCardNumber[maskify(A234-2345-3456-ABCD)=A###-####-####-ABCD]
+ Log
+noOfChars 19
+masked creditcard number::A###-2345-####-ABCD
+expected:<A###-[####]-####-ABCD> but was:<A###-[2345]-####-ABCD>
+ Stack Trace
+Completed in 3ms
+Completed in 7ms
+ [maskify(A234-AAAA-BBBB-ABCD)=A###-AAAA-BBBB-ABCD]
+ shouldMaskCreditCardNumber[maskify(A234-AAAA-BBBB-ABCD)=A###-AAAA-BBBB-ABCD]
+ Log
+noOfChars 19
+masked creditcard number::A###-AAAA-####-ABCD
+expected:<A###-AAAA-[BBBB]-ABCD> but was:<A###-AAAA-[####]-ABCD>
+ Stack Trace
+Completed in 1ms
+ [maskify(abcdefghijk!#$lmnopqrstuvwxyz)=abcdefghijk!#$lmnopqrstuvwxyz]
+ shouldMaskCreditCardNumber[maskify(abcdefghijk!#$lmnopqrstuvwxyz)=abcdefghijk!#$lmnopqrstuvwxyz]
+ Log
+noOfChars 29
+masked creditcard number::abcdefghijk!#$lmnopq
+expected:<abcdefghijk!#$lmnopq[rstuvwxyz]> but was:<abcdefghijk!#$lmnopq[]>
+ Stack Trace
+Completed in 3ms
+ [maskify(AAAA-AAAA-1234-ABCD)=AAAA-AAAA-####-ABCD]
+ shouldMaskCreditCardNumber[maskify(AAAA-AAAA-1234-ABCD)=AAAA-AAAA-####-ABCD]
+ Log
+noOfChars 19
+masked creditcard number::A###-AAAA-####-ABCD
+expected:<A[AAA]-AAAA-####-ABCD> but was:<A[###]-AAAA-####-ABCD>
+ Stack Trace
+Completed in 2ms
+ [maskify(A1!2/(3)[4]^%56789)=A#!#/(#)[#]^%#6789]
+ shouldMaskCreditCardNumber[maskify(A1!2/(3)[4]^%56789)=A#!#/(#)[#]^%#6789]
+ Log
+noOfChars 18
+masked creditcard number::A#!#/(#)[#]^%#6789
+Assertion OK
+Completed in 1ms
+ [maskify(A1234ABCDEFA56789BCDE)=A####ABCDEFA#####BCDE]
+ shouldMaskCreditCardNumber[maskify(A1234ABCDEFA56789BCDE)=A####ABCDEFA#####BCDE]
+ Log
+noOfChars 21
+masked creditcard number::A#######DEFA56789B
+expected:<A####[ABCDEFA#####BCDE]> but was:<A####[###DEFA56789B]>
+ Stack Trace
+Completed in 1ms
+Completed in 2ms
+Completed in 41ms
+
+Task - 2
+Finish the function numberToOrdinal, which should take a number and return it as a string with the correct ordinal indicator suffix (in English). For example, 1 turns into "1st".
+
+For the purposes of this challenge, you may assume that the function will always be passed a non-negative integer. If the function is given 0 as an argument, it should return '0' (as a string).
+
+To help you get started, here is an excerpt from Wikipedia's page on Ordinal Indicators:
+
+st is used with numbers ending in 1 (e.g. 1st, pronounced first)
+nd is used with numbers ending in 2 (e.g. 92nd, pronounced ninety-second)
+rd is used with numbers ending in 3 (e.g. 33rd, pronounced thirty-third)
+As an exception to the above rules, all the "teen" numbers ending with 11, 12 or 13 use -th (e.g. 11th, pronounced eleventh, 112th, pronounced one hundred [and] twelfth)
+th is used for all other numbers (e.g. 9th, pronounced ninth).
+Specification
+Challenge.numberToOrdinal(number)
+take a number and return it as a string with the correct ordinal indicator suffix (in English)
+
+Parameters
+number: Integer - The number to be converted to a string ordinal
+
+Return Value
+String - Returns a string ordinal based off of the number.
+
+Constraints
+0 ≤ number ≤ 10000
+
+Examples
+number	Return Value
+1	"1st"
+2	"2nd"
+3	"3rd"
+4	"4th"
+21	"21st"
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.util.Arrays;
+public class NumberToOrdinalTests {
+  @Test
+  public void shouldHandleSingleDigits() {
+    assertEquals("1st", Challenge.numberToOrdinal(1));
+    assertEquals("2nd", Challenge.numberToOrdinal(2));
+    assertEquals("3rd", Challenge.numberToOrdinal(3));
+  }
+}
+class Challenge {
+  public static String numberToOrdinal( Integer number ) {
+     String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+    
+    int i = number.intValue();
+    System.out.println("number::"+i);
+    switch (i % 100) {
+    case 0:
+         if(number.toString().length()==3){
+           return i + "th"; 
+         }
+         return i + "";   
+    case 11:
+    case 12:
+    case 13:
+        return i + "th";
+    default:
+        System.out.println("ordinal string::"+i + sufixes[i % 10]);
+        return i + sufixes[i % 10];
+
+    }
+  }
+}
+
+Task 3:
+Your job is to create a calculator which evaluates expressions in Reverse Polish notation.
+
+For example expression 5 1 2 + 4 * + 3 - (which is equivalent to 5 + ((1 + 2) * 4) - 3 in normal notation) should evaluate to 14.
+
+Note that for simplicity you may assume that there are always spaces between numbers and operations, e.g. 1 3 + expression is valid, but 1 3+ isn't.
+
+Empty expression should evaluate to 0.
+
+Valid operations are +, -, *, /.
+
+You may assume that there won't be exceptional situations (like stack underflow or division by zero).
+
+Specification
+Challenge.calculate(expression)
+Calculates an expression in Reverse Polish notation
+
+Parameters
+expression: String - The expression to be evaluated
+
+Return Value
+Float - The calculated value from the given expression
+
+Examples
+expression	Return Value
+"1 2 3.5"	3.5
+"10000 123 +"	10123
+"5 1 2 + 4 * + 3 -"	14
+
+Sample Test:
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.util.Arrays;
+public class CalculateTests {
+  private Calc calc = new Calc();
+  @Test
+  public void shouldWorkForAnEmptyString() {
+    assertEquals(0, calc.evaluate(""), 0);
+  }
+  @Test
+  public void shouldParseNumbers() {
+    assertEquals(3, calc.evaluate("1 2 3"), 0);
+  }
+  @Test
+  public void shouldParseFloats() {
+    assertEquals(3.5, calc.evaluate("1 2 3.5"), 0);
+  }
+  @Test
+  public void shouldSupportAddition() {
+    assertEquals(4, calc.evaluate("1 3 +"), 0);
+  }
+  @Test
+  public void shouldSupportMultiplication() {
+    assertEquals(3, calc.evaluate("1 3 *"), 0);
+  }
+  @Test
+  public void shouldSupportSubtraction() {
+    assertEquals(-2, calc.evaluate("1 3 -"), 0);
+  }
+  @Test
+  public void shouldSupportDivision() {
+    assertEquals(2, calc.evaluate("4 2 /"), 0);
+  }
+}
+Solution:
+import java.util.*;
+public class Calc {
+  private String iS;
+  private Stack stack;
+  double returnValue = 0;
+  public double evaluate(String expr) {
+    // TODO: Your code here
+    double returnValue = 0;
+		String operators = "+-*/";
+		Stack<String> stack = new Stack<String>();
+    if(!"".equals(expr)){
+		String[] tokens = expr.split(" ");
+		for(String t : tokens){
+			if(!operators.contains(t)){
+				stack.push(t);
+			}else{
+				int a = Integer.valueOf(stack.pop());
+				int b = Integer.valueOf(stack.pop());
+				int index = operators.indexOf(t);
+				switch(index){
+				case 0:
+					stack.push(String.valueOf(a+b));
+					break;
+				case 1:
+					stack.push(String.valueOf(b-a));
+					break;
+				case 2:
+					stack.push(String.valueOf(a*b));
+					break;
+				case 3:
+					stack.push(String.valueOf(b/a));
+					break;
+				} 
+			}
+		}
+		returnValue = Double.parseDouble(stack.pop());
+    }
+    return returnValue;
+}
+}
