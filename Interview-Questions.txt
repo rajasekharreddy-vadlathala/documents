@@ -1390,3 +1390,18 @@ public class Calc {
 }
 
 >> when to use CountDownLatch in multi threading
+>>Springboot dependency management
+>>springboot global exception handling
+>>springboot reactive programming
+>>SOLID principles
+>>JWT Security
+>>java8 streams
+>>kafka partitions and what is the advantage of it
+>>kafka consumer groups
+>>Junit5 parameterized test with void datatype - jupiter
+>>Springboot advantages
+>>Docker Commands
+>>DOCKER FILE EXPLANATION
+>>Kubernetes
+>>Design patterns
+>>SOLID PRINCIPLES WIth some realtime example
