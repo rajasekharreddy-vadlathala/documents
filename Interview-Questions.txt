@@ -1405,3 +1405,4 @@ public class Calc {
 >>Kubernetes
 >>Design patterns
 >>SOLID PRINCIPLES WIth some realtime example
+>>how do you rollback transaction incase of some service call failed/or save data failed using CQRS SAGA
