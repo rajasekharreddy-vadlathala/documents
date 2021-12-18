@@ -1406,3 +1406,81 @@ public class Calc {
 >>Design patterns
 >>SOLID PRINCIPLES WIth some realtime example
 >>how do you rollback transaction(set to old values) incase of some service call failed/or save data failed using CQRS SAGA
+
+Exception handling
+
+Out of order chunks
+
+Rate limiter
+
+threading issues with the right choice of atomic classes
+
+Rate limiter client –
+
+solution with a queues
+
+·       Databases / SQL
+
+·       basic RDBMS concepts
+
+·       Written a query
+
+·       optimize the query in case of server-side pagination
+
+·       Problem Solving
+
+·       Binary Search
+
+·       Efficient solution n code it.
+
+·       Questions on String, Array, HashMap, TreeMap.
+
+Focus on Yellow highlighted things.
+
+Prepare on attached topics I will be scheduling the next round soon.
+
+Solving Exception handling
+
+Remove duplicate files
+
+Rate limiter- solve
+
+Real time grid updates in angular
+
+SQL - Group by on multiple fields year,dept, gender
+
+Name , year, count of male,count of female
+
+Rate limiter, with multiple instance in micro services.
+
+Singleton with inheritance
+
+Removing duplicates from folder programatically
+
+Exception handling
+
+Solve Autocomplete-- used a no-sql approach, but had the right choice in caching, expiry, lazy loading
+
+Solve Autocomplete extension.
+
+Technical decision taken
+
+Design interface
+
+Technical decision taken
+
+Current project
+
+Problem solving with DS
+
+Dev process 
+
+Deadlines
+
+Dev processes?
+
+Guiding junior developers
+
+Project management deadline challenges : Technical complexity - unknowns, external dependencies, ad-hoc  work
+
+ 
