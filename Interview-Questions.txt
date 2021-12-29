@@ -1483,4 +1483,168 @@ Guiding junior developers
 
 Project management deadline challenges : Technical complexity - unknowns, external dependencies, ad-hoc  work
 
+////////////////////////////////////
+
+
+  ******************************   JAVA concepts  **************************************
+ 1. internal implementation of hashmap, concurrent hashmap
+ 2. diff between hashmap, hashtable and concurrent hashmap
+ 3. difference between comparable and ocomparable with examples
+ 4. difference between interface and abstract class ( at which scenarios u will prefer those)
+ 5.difference between equals and hashcode methods
+ 4. differenc between equals and ==
+ 5. how to overide equals and hashcode methods in our class
+ 6. what if I override only equals but not hashcode methods.
+ 7. what if I override only hashcode  but not equals  methods.
+ 8. difference between  overloading and overidding  ( check the rules and conditions for overriding)( they will give question and ask the output)
+ 9. difference between method  overriding and method hiding
+ 10. what is the use of static keyword. difference between static variable, static method,
+ 11. difference between enum, emumeration
+ 12. difference ways to iterate over list, map( for each, iterator, for loop etc)
+ 13. diiference between list and liked list( which situations u choose list and liked list)
+ 14. difference between set, linkedset, treeset
+ 15.java 8 improvements in hashmap
+ 16. difference between java 6 & java 7 & java 8 & java 9
+ 17. difference between final, finally, finalise
+ 18. logic questions on exceptions( they will give question and ask the output)
+ 19. write code for creating custom exception class
+ 20. difference between eception and error
+ 21. difference between checked exception and unchecked exception
+ 22. rules to follow when u r extending parent method that is throwing exceptions
+ 23. difference between association, aggregation, composition
+ 24. what is serialization, externalization with examples
+ 25. how to create thread, difference ways which is best option
+ 26. diff between stack and heap
+ 27. diff between sleep and wait
+ 28. diff between yield, notify, notifyall
+ 29. diff callable and runnable
+ 30  what if I overide  start method in thread.
+ 31. what is join function in thread explain
+ 32. what if i call directly run method without starting thread
+ 33. what is executor in java8 with explanation
+ 34. improvemetns in interface on java8
+ 35. lambda expressions streams concepts with examples( http://www.mkyong.com/tutorials/java-8-tutorials/)
+ 36. difference between JVM JRE, JDK
+ 37. how JVM works
+ 38. explain about garbage collections
+ 39. diff between iterator and list iterator
+ 40. questions on  string constant pool
+ 41. why string is immutable?
+ 42. how to create immutable class and singleton class
+ 43. why java is so popular when compared to c,c++
+ 44. how to avoid breaking the singleton using reflection,cloning?
+ 45. what is diamond problem in java
+ 46. how to write custom checked exception
+ 47. what is static variables, instance variables, local variables,
+ 48. difference between string , string buffer string builder
+ 49. what is string interning and why we need
+ 50. difference between interface and abstract class (when u prefer interface and abstracr class)
+ 
+ 
+ 
+ ******************** programs *****************
+ 
+ 1. remove duplicates from array without using any built in functions
+ 2. write program to reverse a string using recursion and without using recursion
+ 3. array given  we should sort the array in such a way that first half in ascending and second half in descending
+ 4. reverse only vowels in a string
+ 5. given hashmap<K,V>sort the map based on value in descending order
+ 6. program to iterate over list and print
+ 7. find the longest sub array sum in a given array
+ 8. write a program that require minimum jumprs to reach end of the array
+ 9. given a array, and given sum value K , find all the pairs that sum to given K
+ 10.write a program to sort array using bubble sort or selection or insertion or quick sort
+ 11.write a program to count the charaters in string
+ 12. write a program to serialize and deserialize a class
+ 13.write a program to print even and odd numbers using two threads
+ 14.Write a program to print fibonacci series.
+ 15. producer consumer prolem in java(https://www.geeksforgeeks.org/producer-consumer-solution-using-threads-java/)
+ 16. how to read a properties file and display
+ 17. write a program to sort the elements in descending order
+ 18. program to write your own liked list
+ 19 how to reverse a linked list
+ 20 hot to detect a loop and delete the loop in linked list
+ 21. check ggeks for geeks website on linked list and tress data structures
+ 22. print pascal traingle
+ 23. print pattern series (mostly asked question for 3 yrs)
+ 24. binary search logic to find eleement in array
+ 25. quick sort algorithm to sort arrays
+ 
+ 
+**************************  puzzles, datastructues, programs *****************
+ 
+https://www.geeksforgeeks.org/
+ 
+ 
+ 
+******************* java 8 features **********************
+ 
+ http://www.mkyong.com/tutorials/java-8-tutorials/
+ 
+ https://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/
+ 
+ 
+ ***************************** Spring ***************************
+ 
+ concepts
+ 
+ https://www.journaldev.com/2888/spring-tutorial-spring-core-tutorial
+ https://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/overview.html
+ https://javabrains.thinkific.com/courses/learning-spring-core
+ 
+ 
+ Interview questions 
+ 
+ https://www.edureka.co/blog/interview-questions/spring-interview-questions/
+ https://www.baeldung.com/spring-interview-questions
+ 
+************************* Hibernate *****************************
+ concepts
+ 
+ https://howtodoinjava.com/hibernate-tutorials/
+ 
+  Interview questions 
+  
+ https://www.journaldev.com/3633/hibernate-interview-questions-and-answers
+ 
+ 
+ ************************ Design patterns ***************************
+ 
+ https://www.journaldev.com/1827/java-design-patterns-example-tutorial
+ 
+ http://www.java67.com/2012/09/top-10-java-design-pattern-interview-question-answer.html
+ 
+ **********************  UI ***********************
+ 
+ https://javascript.info/first-steps
+ 
+ https://ldopensource.wordpress.com/2013/04/21/ui-interview-questiions-answers-html5-and-css3/
+ 
+ /////////////////coforge
+ Spring cloud BUS?
+What is the serializable interface - it is marker interface with no method
+What is the other interface alternative to serilazable which is having one method and not marker interface
+
+what will happen behind the scenes when loading configs after update of any config.
+
+can inject prototype bean into singleton bean?
+spring provides another controller outof the box - what is that - Dispatcher Servlet..
+Auth2 - like Forgerock
+
+spring bean life cycle - callback methods
+
+jwt signature
+
+where do u keep users data if we have an entity with 2 attributes and later after few months user asked to add one more .. 
+how do you represnt new entity in DB? liquibase
+
+versioning and anyother alternative 
+
+microservice design principles?
+
+armstrong number?
+
+spring security - KeyCloak,OpenIDconnect
+Spring reactive programming
+
  
