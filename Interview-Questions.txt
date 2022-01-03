@@ -1647,4 +1647,19 @@ armstrong number?
 spring security - KeyCloak,OpenIDconnect
 Spring reactive programming
 
+//
+//write generics list that should allow only String and Integer data types 
+//and should not allow other data types
+
+//Constructor chaining in inheritance - oops
+
+//lets create an class with put and get method should not access element before updating
+//element in put method
+
+//ThreadPool-10 threads size
+// 10 million records - will all the records will be accepted or rejected
+//TreeSet and LinkedTreeSet
+//wildcard in generics - types of wildcards
+//upper bounded wildcards/Lower bounded wildcards[
+
  
